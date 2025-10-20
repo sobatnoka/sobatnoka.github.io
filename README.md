@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -148,5 +148,4 @@ footer {background: #2E7D32; color: white; text-align: center; padding: 20px; ma
         p.style.display = p.style.display === 'block' ? 'none' : 'block';
       });
     });
-  </script></body>
-</html>
+  </script></bscript>
