@@ -1,5 +1,4 @@
-# sobatnoka.github.io
-Landingpage awal TaniPintar 
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
