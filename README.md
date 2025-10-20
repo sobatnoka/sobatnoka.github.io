@@ -1,213 +1,167 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SobatNoka - Bersama Tumbuh Lebih Pintar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      scroll-behavior: smooth;
-    }/* Hero Section dengan Parallax */
-.hero {
-  height: 100vh;
-  background-image: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  text-align: center;
-  position: relative;
-  flex-direction: column;
-}
-.hero h1 {
-  font-size: 3rem;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-.typing-text {
-  font-size: 1.5rem;
-  color: #fff;
-  border-right: 3px solid #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 0;
-  animation: typing 4s steps(40, end) forwards, blink 0.8s infinite;
-}
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
-}
-@keyframes blink {
-  0%, 100% { border-color: transparent; }
-  50% { border-color: #fff; }
-}
-
-/* Animasi fade-in bergelombang */
-.service-card {
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeWave 1s forwards;
-  background:#f9f9f9;
-  padding:20px;
-  border-radius:10px;
-  width:200px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
-.service-card:nth-child(1) { animation-delay: 0.3s; }
-.service-card:nth-child(2) { animation-delay: 0.6s; }
-.service-card:nth-child(3) { animation-delay: 0.9s; }
-.service-card:nth-child(4) { animation-delay: 1.2s; }
-
-@keyframes fadeWave {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Hover Effect */
-.service-card:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  background: #eaffea;
-}
-
-/* Scroll Reveal */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s ease;
-}
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Loading Screen */
-#loadingScreen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  transition: opacity 0.5s ease;
-}
-.spinner {
-  border: 8px solid #f3f3f3;
-  border-top: 8px solid #4CAF50;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1s linear infinite;
-}
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Back to Top Button */
-#backToTop {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  z-index: 999;
-  background: #4CAF50;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  padding: 15px;
-  font-size: 18px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  display: none;
-  transition: opacity 0.3s ease;
-}
-#backToTop:hover {
-  background: #45a049;
-}
-
+    body {margin:0;font-family:'Poppins',sans-serif;scroll-behavior:smooth;transition:background .3s,color .3s;}
+    header{position:fixed;top:0;left:0;right:0;background:#fff;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:15px 30px;box-shadow:0 2px 6px rgba(0,0,0,.1);}
+    header.dark{background:#222;color:#fff;}
+    header a{margin:0 10px;text-decoration:none;color:inherit;font-weight:600;}
+    section{padding:100px 20px;min-height:100vh;}
+    .hero{background:url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;}
+    .hero h1{font-size:3rem;margin:0;}
+    .typing{border-right:2px solid #fff;white-space:nowrap;overflow:hidden;animation:typing 4s steps(30,end) infinite alternate;}
+    @keyframes typing{from{width:0}to{width:100%}}
+    .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+    .card{background:#fff;padding:20px;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,.1);transition:.3s;opacity:0;transform:translateY(30px);}
+    .card.visible{opacity:1;transform:translateY(0);transition:all .6s ease-in-out;}
+    .card:hover{transform:scale(1.05);box-shadow:0 6px 12px rgba(0,0,0,.2);}
+    form{max-width:400px;margin:auto;display:flex;flex-direction:column;gap:15px;}
+    input,button{padding:12px;border-radius:8px;border:1px solid #ccc;font-size:1rem;}
+    button{background:#28a745;color:#fff;border:none;cursor:pointer;}
+    button:hover{background:#218838;}
+    footer{background:#222;color:#fff;padding:40px 20px;text-align:center;}
+    .scroll-progress{position:fixed;top:0;left:0;height:5px;background:#28a745;width:0;z-index:2000;}
+    #backToTop{position:fixed;bottom:30px;right:30px;background:#28a745;color:#fff;border:none;padding:12px 15px;border-radius:50%;cursor:pointer;display:none;}
+    #loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;display:flex;justify-content:center;align-items:center;z-index:3000;}
+    #loader div{border:6px solid #f3f3f3;border-top:6px solid #28a745;border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite;}
+    @keyframes spin{100%{transform:rotate(360deg)}}
+    body.dark{background:#111;color:#eee;}
+    body.dark .card{background:#333;color:#eee;}
   </style>
 </head>
-<body>  <!-- Loading Screen -->  <div id="loadingScreen">
-    <div class="spinner"></div>
-  </div>  <!-- Progress bar -->  <div id="progressBar" style="position:fixed;top:0;left:0;width:0;height:5px;background:#4CAF50;z-index:1000;"></div>  <!-- Hero Section dengan Parallax dan Typing Effect -->  <section class="hero">
-    <h1>Selamat Datang di SobatNoka 🌱</h1>
-    <div class="typing-text">Bersama Tumbuh Lebih Pintar...</div>
-  </section>  <!-- Layanan dengan animasi bergelombang dan hover -->  <section style="padding:50px;text-align:center;">
-    <h2 class="reveal">Layanan SobatNoka</h2>
-    <div style="display:flex;justify-content:space-around;flex-wrap:wrap;gap:20px;margin-top:30px;">
-      <div class="service-card">🚜 <br/>TaniPintar</div>
-      <div class="service-card">🌍 <br/>TaniLink</div>
-      <div class="service-card">🌱 <br/>BioGrow</div>
-      <div class="service-card">🌾 <br/>BibitKu</div>
+<body>
+  <!-- Loading Screen -->
+  <div id="loader"><div></div></div>
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" id="scrollBar"></div>
+
+  <!-- Header -->
+  <header id="navbar">
+    <div class="logo"><strong>SobatNoka</strong></div>
+    <nav>
+      <a href="#layanan">Layanan</a>
+      <a href="#keuntungan">Keuntungan</a>
+      <a href="#testimoni">Testimoni</a>
+      <a href="#daftar">Daftar</a>
+      <a href="#artikel">Artikel</a>
+      <a href="#faq">FAQ</a>
+      <a href="#kontak">Kontak</a>
+      <button id="darkToggle">🌙</button>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>SobatNoka</h1>
+    <h2 class="typing">Bersama Tumbuh Lebih Pintar...</h2>
+  </section>
+
+  <!-- Layanan -->
+  <section id="layanan">
+    <h2>Layanan SobatNoka</h2>
+    <div class="services">
+      <div class="card">🌾 <h3>TaniPintar</h3><p>Solusi digital untuk petani agar lebih produktif dan efisien.</p></div>
+      <div class="card">🔗 <h3>TaniLink</h3><p>Menghubungkan petani dengan pasar dan pembeli langsung.</p></div>
+      <div class="card">🌱 <h3>BioGrow</h3><p>Pupuk organik dan bioteknologi ramah lingkungan.</p></div>
+      <div class="card">🌿 <h3>BibitKu</h3><p>Penyediaan bibit unggul dan berkualitas.</p></div>
     </div>
-  </section>  <!-- Keuntungan Section -->  <section style="padding:50px;text-align:center;background:#f0f9f0;">
-    <h2 class="reveal">Keuntungan Menjadi SobatNoka</h2>
-    <p class="reveal">Akses mudah ke teknologi pertanian, jejaring petani, pelatihan eksklusif, dan berbagai promo menarik untuk mendukung kesejahteraan petani.</p>
-  </section>  <!-- Testimoni Section -->  <section style="padding:50px;text-align:center;">
-    <h2 class="reveal">Testimoni SobatNoka</h2>
-    <blockquote class="reveal">“Bergabung dengan SobatNoka membuat usaha tani saya lebih produktif dan menguntungkan!” - Pak Budi</blockquote>
-  </section>  <!-- Form Section -->  <section style="padding:50px;text-align:center;background:#f9f9f9;">
-    <h2 class="reveal">Daftar SobatNoka</h2>
-    <form class="reveal" style="display:flex;flex-direction:column;align-items:center;gap:10px;max-width:400px;margin:auto;">
-      <input type="text" placeholder="Nama Lengkap" required style="padding:10px;width:100%;border-radius:5px;border:1px solid #ccc;">
-      <input type="email" placeholder="Email" required style="padding:10px;width:100%;border-radius:5px;border:1px solid #ccc;">
-      <input type="tel" placeholder="No. Telepon" required style="padding:10px;width:100%;border-radius:5px;border:1px solid #ccc;">
-      <button type="submit" style="padding:10px 20px;background:#4CAF50;color:#fff;border:none;border-radius:5px;cursor:pointer;">Daftar</button>
+  </section>
+
+  <!-- Keuntungan -->
+  <section id="keuntungan">
+    <h2>Keuntungan Bergabung SobatNoka</h2>
+    <ul>
+      <li>Akses teknologi pertanian modern</li>
+      <li>Jaringan pasar yang luas</li>
+      <li>Bimbingan dan komunitas petani</li>
+      <li>Dukungan finansial dan bibit unggul</li>
+    </ul>
+  </section>
+
+  <!-- Testimoni -->
+  <section id="testimoni">
+    <h2>Testimoni Petani</h2>
+    <blockquote>“Sejak gabung SobatNoka, hasil panen saya meningkat 2x lipat!”</blockquote>
+    <cite>- Budi, Petani Cabai</cite>
+  </section>
+
+  <!-- Form Daftar -->
+  <section id="daftar">
+    <h2>Daftar SobatNoka Sekarang</h2>
+    <form id="sobatNokaForm">
+      <input type="text" name="nama" placeholder="Nama Lengkap" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="tel" name="telepon" placeholder="No. Telepon" required>
+      <button type="submit">Daftar Sekarang</button>
     </form>
-  </section>  <!-- Back to Top Button --><button id="backToTop">↑</button>
+  </section>
+
+  <!-- Artikel -->
+  <section id="artikel">
+    <h2>Artikel Terbaru</h2>
+    <p>Tips pertanian, inovasi teknologi, dan cerita sukses petani bersama SobatNoka.</p>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <h2>FAQ</h2>
+    <p><strong>Tanya:</strong> Apakah SobatNoka berbayar?<br><strong>Jawab:</strong> Tidak, gratis untuk semua petani.</p>
+  </section>
+
+  <!-- Footer -->
+  <footer id="kontak">
+    <p>🌱 SobatNoka © 2025 | Bersama Tumbuh Lebih Pintar</p>
+    <p>
+      <a href="#">Facebook</a> | 
+      <a href="#">Instagram</a> | 
+      <a href="#">YouTube</a>
+    </p>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!..." width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  </footer>
+
+  <button id="backToTop">⬆️</button>
 
   <script>
-    // Loading Screen
-    window.addEventListener("load", function(){
-      const loader = document.getElementById("loadingScreen");
-      loader.style.opacity = "0";
-      setTimeout(() => loader.style.display = "none", 500);
-    });
-
-    // Progress Bar & Back to Top
-    window.onscroll = function() {
-      let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-      let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      let scrolled = (winScroll / height) * 100;
-      document.getElementById("progressBar").style.width = scrolled + "%";
-
-      const btn = document.getElementById("backToTop");
-      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-        btn.style.display = "block";
-      } else {
-        btn.style.display = "none";
-      }
-
-      // Scroll reveal effect
-      const reveals = document.querySelectorAll('.reveal');
-      for (let i = 0; i < reveals.length; i++) {
-        const windowHeight = window.innerHeight;
-        const elementTop = reveals[i].getBoundingClientRect().top;
-        const elementVisible = 100;
-        if (elementTop < windowHeight - elementVisible) {
-          reveals[i].classList.add("active");
-        }
-      }
+    // Loader
+    window.onload=function(){document.getElementById("loader").style.display="none";};
+    // Dark mode
+    const toggle=document.getElementById("darkToggle");
+    toggle.addEventListener("click",()=>{document.body.classList.toggle("dark");document.getElementById("navbar").classList.toggle("dark");});
+    // Scroll progress
+    window.onscroll=function(){
+      let winScroll=document.body.scrollTop||document.documentElement.scrollTop;
+      let height=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+      let scrolled=(winScroll/height)*100;
+      document.getElementById("scrollBar").style.width=scrolled+"%";
+      document.getElementById("backToTop").style.display=winScroll>200?"block":"none";
+      document.querySelectorAll(".card").forEach(c=>{
+        let pos=c.getBoundingClientRect().top;
+        let winH=window.innerHeight;
+        if(pos<winH-50){c.classList.add("visible");}
+      });
     };
+    // Back to top
+    document.getElementById("backToTop").onclick=()=>{window.scrollTo({top:0,behavior:'smooth'});};
 
-    // Back to Top click
-    document.getElementById("backToTop").addEventListener("click", function(){
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Form Google Sheets Integration
+    document.getElementById("sobatNokaForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      let data={nama:this.nama.value,email:this.email.value,telepon:this.telepon.value};
+      fetch("https://script.google.com/macros/s/AKfycbyMbVgcE2OwAd-INaIIDhLHfXHqTQgwL-8jTCGUQF8kGCMxBjMUz9rVgYXR0zzxWGO6/exec",{
+        method:"POST",
+        body:JSON.stringify(data)
+      })
+      .then(res=>res.text())
+      .then(res=>{
+        alert("✅ Pendaftaran berhasil! Data tersimpan di Google Sheets.");
+        this.reset();
+      })
+      .catch(err=>alert("❌ Terjadi kesalahan, coba lagi."));
     });
-  </script></body>
+  </script>
+</body>
 </html>
