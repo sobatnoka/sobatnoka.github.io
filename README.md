@@ -50,7 +50,6 @@ center/cover no-repeat;display:flex;align-items:center;justify-content:center;fl
       <a href="#artikel">Artikel</a>
       <a href="#faq">FAQ</a>
       <a href="#kontak">Kontak</a>
-      <button id="darkToggle">🌙</button>
     </nav>
   </header>
 
