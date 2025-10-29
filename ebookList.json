@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Panduan Dasar Pertanian Organik",
+    "desc": "Teknik dasar pertanian ramah lingkungan untuk pemula.",
+    "url": "https://raw.githubusercontent.com/username/repo/main/ebooks/pertanian_organik.pdf"
+  },
+  {
+    "title": "Budidaya Cabe Merah Unggul",
+    "desc": "Langkah-langkah sukses menanam cabe merah untuk hasil optimal.",
+    "url": "https://raw.githubusercontent.com/username/repo/main/ebooks/cabe_merah.pdf"
+  },
+  {
+    "title": "Teknologi Smart Farming",
+    "desc": "Digitalisasi pertanian berbasis IoT dan analisis data.",
+    "url": "https://raw.githubusercontent.com/username/repo/main/ebooks/smart_farming.pdf"
+  }
+]
