@@ -163,5 +163,113 @@
       .catch(err=>alert("❌ Terjadi kesalahan, coba lagi."));
     });
   </script>
+  <!-- Form Daftar -->
+<section id="daftar">
+  <h2>Daftar SobatNoka Sekarang</h2>
+  <form id="sobatNokaForm">
+    <input type="text" name="nama" placeholder="Nama Lengkap" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="tel" name="telepon" placeholder="No. Telepon" required>
+    <button type="submit">Daftar Sekarang</button>
+  </form>
+</section>
+
+<!-- Popup Modal Sukses -->
+<div id="successModal" class="popup-overlay">
+  <div class="popup-box popup-success">
+    <h3>✅ Pendaftaran Berhasil</h3>
+    <p>Selamat bergabung bersama <b>SobatNoka</b> 🌱</p>
+    <button onclick="closeModal('successModal')" class="close-btn">Tutup</button>
+  </div>
+</div>
+
+<!-- Popup Modal Error -->
+<div id="errorModal" class="popup-overlay">
+  <div class="popup-box popup-error">
+    <h3>❌ Gagal Mengirim</h3>
+    <p>Terjadi kesalahan. Mohon coba lagi nanti.</p>
+    <button onclick="closeModal('errorModal')" class="close-btn error-btn">Tutup</button>
+  </div>
+</div>
+
+<style>
+  /* Popup Overlay */
+  .popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+  }
+
+  /* Popup Box */
+  .popup-box {
+    background: #28a745;
+    color: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 320px;
+    transform: scale(0.8);
+    opacity: 0;
+    animation: fadeInScale 0.4s ease forwards;
+  }
+
+  .popup-error {
+    background: #dc3545;
+  }
+
+  @keyframes fadeInScale {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .close-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    color: #28a745;
+    font-weight: 600;
+  }
+
+  .error-btn {
+    color: #dc3545;
+  }
+
+  .close-btn:hover {
+    opacity: 0.8;
+  }
+</style>
+
+<script>
+  // Form Google Sheets Integration + Popup Modal Animasi
+  document.getElementById("sobatNokaForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    let data={nama:this.nama.value,email:this.email.value,telepon:this.telepon.value};
+
+    fetch("https://script.google.com/macros/s/AKfycbyMbVgcE2OwAd-INaIIDhLHfXHqTQgwL-8jTCGUQF8kGCMxBjMUz9rVgYXR0zzxWGO6/exec",{
+      method:"POST",
+      body:JSON.stringify(data)
+    })
+    .then(res=>res.text())
+    .then(res=>{
+      document.getElementById("successModal").style.display="flex"; // tampilkan popup sukses
+      this.reset();
+    })
+    .catch(err=>{
+      document.getElementById("errorModal").style.display="flex"; // tampilkan popup error
+    });
+  });
+
+  function closeModal(id){
+    document.getElementById(id).style.display="none";
+  }
+</script>
 </body>
 </html>
