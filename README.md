@@ -371,6 +371,89 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Book Pertanian Edukatif</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-green-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-green-700 text-white text-center py-4 text-2xl font-bold shadow">
+    📗 E-Book Pertanian Edukatif
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto p-4">
+    <section id="ebookList" class="grid sm:grid-cols-2 md:grid-cols-3 gap-6"></section>
+
+    <section id="viewer" class="hidden mt-6">
+      <button id="backBtn" class="mb-4 bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800 transition">⬅ Kembali</button>
+      <iframe id="pdfViewer" class="w-full h-[80vh] border rounded-xl shadow" src=""></iframe>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-4 text-sm text-gray-600">
+    © 2025 Edukasi Pertanian Indonesia 🌾 | SobatNoka
+  </footer>
+
+  <script>
+    const ebookListDiv = document.getElementById("ebookList");
+    const viewer = document.getElementById("viewer");
+    const pdfViewer = document.getElementById("pdfViewer");
+    const backBtn = document.getElementById("backBtn");
+
+    // Ganti URL ini ke file JSON di repo GitHub kamu
+    const ebookListURL = "https://raw.githubusercontent.com/username/repo/main/data/ebookList.json";
+
+    async function loadEbooks() {
+      try {
+        const response = await fetch(ebookListURL);
+        const ebooks = await response.json();
+
+        ebookListDiv.innerHTML = ebooks.map(e => `
+          <div class="bg-white p-5 rounded-xl shadow hover:shadow-lg transition transform hover:-translate-y-1 cursor-pointer"
+               onclick="openEbook('${e.url}')">
+            <div class="h-40 bg-green-100 flex items-center justify-center rounded-lg mb-3">
+              <span class="text-4xl">📘</span>
+            </div>
+            <h3 class="text-lg font-bold mb-1 text-green-800">${e.title}</h3>
+            <p class="text-sm text-gray-600">${e.desc}</p>
+          </div>
+        `).join('');
+      } catch (err) {
+        ebookListDiv.innerHTML = `<p class="text-red-600 text-center">❌ Gagal memuat daftar eBook dari GitHub.</p>`;
+        console.error(err);
+      }
+    }
+
+    function openEbook(url) {
+      viewer.classList.remove("hidden");
+      ebookListDiv.classList.add("hidden");
+      pdfViewer.src = url;
+    }
+
+    backBtn.addEventListener("click", () => {
+      viewer.classList.add("hidden");
+      ebookListDiv.classList.remove("hidden");
+      pdfViewer.src = "";
+    });
+
+    loadEbooks();
+  </script>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kuis Edukasi Pertanian 🌾</title>
   <style>
     body {
