@@ -11,7 +11,7 @@
     header.dark{background:#222;color:#fff;}
     header a{margin:0 10px;text-decoration:none;color:inherit;font-weight:600;}
     section{padding:100px 20px;min-height:100vh;}
-    .hero{background:url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;}
+center/cover no-repeat;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;}
     .hero h1{font-size:3rem;margin:0;}
     .typing{border-right:2px solid #fff;white-space:nowrap;overflow:hidden;animation:typing 4s steps(30,end) infinite alternate;}
     @keyframes typing{from{width:0}to{width:100%}}
