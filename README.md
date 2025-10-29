@@ -1,3 +1,371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SobatNoka 🌾 | Bersama Membangun Pertanian Modern</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: #f9fff9;
+      color: #333;
+    }
+
+    /* === HEADER === */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #28a745;
+      color: #fff;
+      padding: 12px 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: top 0.4s ease;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 24px;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 15px;
+        background: #28a745;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      }
+
+      .nav-links.active {
+        display: flex;
+        animation: fadeInMenu 0.3s ease forwards;
+      }
+
+      @keyframes fadeInMenu {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    /* === HERO === */
+    section {
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    #home {
+      background: linear-gradient(135deg, #28a745, #85e085);
+      color: white;
+      padding-top: 120px;
+      padding-bottom: 120px;
+    }
+
+    h1 {
+      font-size: 36px;
+    }
+
+    h2 {
+      color: #28a745;
+      font-size: 28px;
+    }
+
+    /* === PRODUK === */
+    .produk-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .produk-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .produk-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* === KEUNTUNGAN === */
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: 20px auto;
+      text-align: left;
+    }
+
+    ul li {
+      background: #e8ffe8;
+      margin: 10px 0;
+      padding: 10px 15px;
+      border-radius: 10px;
+    }
+
+    /* === VIDEO SECTION === */
+    .video-section {
+      text-align: center;
+      padding: 60px 20px;
+      background: #f8fff8;
+    }
+
+    .video-container {
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .video-container video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* === FORM === */
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background: #28a745;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #218838;
+    }
+
+    /* === POPUP === */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 5000;
+    }
+
+    .popup-box {
+      background: #28a745;
+      color: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 320px;
+      transform: scale(0.8);
+      opacity: 0;
+      animation: fadeInScale 0.4s ease forwards;
+    }
+
+    .popup-error {
+      background: #dc3545;
+    }
+
+    @keyframes fadeInScale {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #fff;
+      color: #28a745;
+      font-weight: 600;
+    }
+
+    .error-btn {
+      color: #dc3545;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="navbar" id="navbar">
+    <div class="logo">🌾 <b>SobatNoka</b></div>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <nav id="navMenu" class="nav-links">
+      <a href="#home">Beranda</a>
+      <a href="#produk">Produk</a>
+      <a href="#keuntungan">Keuntungan</a>
+      <a href="#daftar">Daftar</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="home">
+    <h1>Selamat Datang di SobatNoka 🌱</h1>
+    <p>Bersama membangun pertanian modern dengan solusi digital terintegrasi.</p>
+  </section>
+
+  <!-- PRODUK -->
+  <section id="produk">
+    <h2>Produk SobatNoka</h2>
+    <div class="produk-grid">
+      <div class="produk-card"><h3>TaniPintar</h3><p>Solusi digital cerdas untuk pertanian presisi.</p></div>
+      <div class="produk-card"><h3>TaniLink</h3><p>Konektivitas antar pelaku agribisnis dengan efisien.</p></div>
+      <div class="produk-card"><h3>BioGrow</h3><p>Pupuk organik modern berbasis bioteknologi.</p></div>
+      <div class="produk-card"><h3>BibitKu</h3><p>Pusat distribusi benih dan bibit unggul untuk petani.</p></div>
+    </div>
+  </section>
+
+  <!-- KEUNTUNGAN -->
+  <section id="keuntungan">
+    <h2>Keuntungan Menjadi SobatNoka</h2>
+    <ul>
+      <li>🌿 Akses pelatihan dan teknologi pertanian terbaru</li>
+      <li>🤝 Terhubung dengan komunitas petani modern</li>
+      <li>💰 Akses modal dan pasar lebih mudah</li>
+      <li>📊 Data dan insight untuk meningkatkan hasil panen</li>
+    </ul>
+  </section>
+
+  <!-- VIDEO -->
+  <section id="video" class="video-section">
+    <h2>Kenali SobatNoka Lebih Dekat 🎥</h2>
+    <p>Tonton video singkat tentang bagaimana SobatNoka membantu petani dan ekosistem pertanian modern.</p>
+    <div class="video-container">
+      <video controls autoplay muted loop>
+        <source src="https://raw.githubusercontent.com/sobatnoka/sobatnoka.github.io/3a3335eb1f203eef80cb271ce8adca74f329d758/f03b0fd5d784e018fbde2b67eaad6ce2_1761736116714.mp4" type="video/mp4">
+        Browser kamu tidak mendukung video.
+      </video>
+    </div>
+  </section>
+
+  <!-- FORM PENDAFTARAN -->
+  <section id="daftar">
+    <h2>Daftar SobatNoka Sekarang</h2>
+    <form id="sobatNokaForm">
+      <input type="text" name="nama" placeholder="Nama Lengkap" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="tel" name="telepon" placeholder="No. Telepon" required>
+      <button type="submit">Daftar Sekarang</button>
+    </form>
+  </section>
+
+  <!-- POPUP -->
+  <div id="successModal" class="popup-overlay">
+    <div class="popup-box">
+      <h3>✅ Pendaftaran Berhasil</h3>
+      <p>Selamat bergabung bersama <b>SobatNoka</b> 🌱</p>
+      <button onclick="closeModal('successModal')" class="close-btn">Tutup</button>
+    </div>
+  </div>
+
+  <div id="errorModal" class="popup-overlay">
+    <div class="popup-box popup-error">
+      <h3>❌ Gagal Mengirim</h3>
+      <p>Terjadi kesalahan. Mohon coba lagi nanti.</p>
+      <button onclick="closeModal('errorModal')" class="close-btn error-btn">Tutup</button>
+    </div>
+  </div>
+
+  <script>
+    // MENU MOBILE
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navMenu");
+    const navbar = document.getElementById("navbar");
+
+    menuToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("active");
+    });
+
+    // AUTO HIDE HEADER
+    let lastScrollTop = 0;
+    window.addEventListener("scroll", () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (scrollTop > lastScrollTop && scrollTop > 60) navbar.style.top = "-80px";
+      else navbar.style.top = "0";
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    });
+
+    // FORM GOOGLE SHEETS
+    document.getElementById("sobatNokaForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      let data={nama:this.nama.value,email:this.email.value,telepon:this.telepon.value};
+
+      fetch("https://script.google.com/macros/s/AKfycbyMbVgcE2OwAd-INaIIDhLHfXHqTQgwL-8jTCGUQF8kGCMxBjMUz9rVgYXR0zzxWGO6/exec",{
+        method:"POST",
+        body:JSON.stringify(data)
+      })
+      .then(res=>res.text())
+      .then(res=>{
+        document.getElementById("successModal").style.display="flex";
+        this.reset();
+      })
+      .catch(err=>{
+        document.getElementById("errorModal").style.display="flex";
+      });
+    });
+
+    function closeModal(id){
+      document.getElementById(id).style.display="none";
+    }
+  </script>
+</body>
+</html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
