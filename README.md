@@ -408,7 +408,7 @@
     const backBtn = document.getElementById("backBtn");
 
     // Ganti URL ini ke file JSON di repo GitHub kamu
-    const ebookListURL = "https://raw.githubusercontent.com/username/repo/main/data/ebookList.json";
+    const ebookListURL = "https://github.com/sobatnoka/sobatnoka.github.io/blob/ddbcd6ee2ea12c93c86db41fa02e2e0d0dd1d987/Hortikultura_Level1_Dasar.pdf";
 
     async function loadEbooks() {
       try {
