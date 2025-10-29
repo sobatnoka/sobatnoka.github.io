@@ -33,6 +33,15 @@ center/cover no-repeat;display:flex;align-items:center;justify-content:center;fl
     body.dark .card{background:#333;color:#eee;}
   </style>
 </head>
+  <script>
+  // Toggle menu di layar kecil
+  const menuToggle = document.getElementById("menuToggle");
+  const navMenu = document.getElementById("navMenu");
+
+  menuToggle.addEventListener("click", () => {
+    navMenu.classList.toggle("active");
+  });
+</script>
 <body>
   <!-- Loading Screen -->
   <div id="loader"><div></div></div>
