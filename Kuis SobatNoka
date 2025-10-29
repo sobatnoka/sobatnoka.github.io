@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kuis Edukasi Pertanian</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #8bc34a, #558b2f);
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      background: rgba(0,0,0,0.25);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    button {
+      background: #33691e;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #689f38;
+    }
+    select {
+      padding: 8px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 20px;
+    }
+    .leaderboard {
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 20px;
+    }
+    h1, h2, h3 {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🌾 Kuis Edukasi Pertanian</h1>
+
+    <div id="category-container">
+      <h2>Pilih Kategori</h2>
+      <select id="categorySelect">
+        <option value="">-- Pilih Kategori --</option>
+        <option value="tanaman">🌱 Tanaman</option>
+        <option value="peternakan">🐄 Peternakan</option>
+        <option value="perikanan">🐟 Perikanan</option>
+        <option value="hortikultura">🌼 Hortikultura</option>
+      </select><br>
+      <button onclick="startCategory()">Mulai Kuis</button>
+    </div>
+
+    <div id="quiz-container" style="display:none;">
+      <h2 id="question"></h2>
+      <button onclick="answer(true)">Benar</button>
+      <button onclick="answer(false)">Salah</button>
+    </div>
+
+    <div id="result" style="display:none;">
+      <h2>Skor Akhir: <span id="score"></span></h2>
+      <button onclick="restartQuiz()">Ulangi</button>
+      <button onclick="backToMenu()">Kembali ke Menu</button>
+    </div>
+
+    <div class="leaderboard" id="leaderboard" style="display:none;">
+      <h3>🏆 Papan Peringkat <span id="categoryName"></span></h3>
+      <ul id="leaderList"></ul>
+    </div>
+  </div>
+
+  <script>
+    // 🔹 Bank soal per kategori
+    const allQuestions = {
+      tanaman: [
+        { text: "Padi adalah tanaman pangan utama di Indonesia.", correct: true },
+        { text: "Jagung termasuk tanaman hortikultura.", correct: false },
+        { text: "Kedelai bisa tumbuh di lahan kering.", correct: true },
+        { text: "Pupuk NPK mengandung unsur Nitrogen, Fosfor, dan Kalium.", correct: true },
+        { text: "Kacang tanah termasuk tanaman umbi.", correct: false },
+        { text: "Tanaman padi berumur sekitar 3-4 bulan.", correct: true }
+      ],
+      peternakan: [
+        { text: "Sapi merupakan hewan ruminansia.", correct: true },
+        { text: "Ayam termasuk hewan herbivora.", correct: false },
+        { text: "Domba bisa menghasilkan wol.", correct: true },
+        { text: "Peternakan modern menggunakan sistem kandang tertutup.", correct: true },
+        { text: "Kambing tidak bisa mencerna rumput.", correct: false },
+        { text: "Pakan ternak tinggi protein mempercepat pertumbuhan.", correct: true }
+      ],
+      perikanan: [
+        { text: "Ikan lele hidup di air asin.", correct: false },
+        { text: "Udang vaname termasuk udang air laut.", correct: true },
+        { text: "Kolam terpal bisa digunakan untuk budidaya ikan nila.", correct: true },
+        { text: "Pakan ikan harus mengandung protein tinggi.", correct: true },
+        { text: "Ikan gurame termasuk ikan air tawar.", correct: true },
+        { text: "Oksigen terlarut tidak penting untuk budidaya ikan.", correct: false }
+      ],
+      hortikultura: [
+        { text: "Cabai, tomat, dan bawang termasuk tanaman hortikultura.", correct: true },
+        { text: "Mangga termasuk tanaman semusim.", correct: false },
+        { text: "Sayuran daun termasuk kelompok tanaman hortikultura.", correct: true },
+        { text: "Pupuk kandang tidak boleh digunakan untuk tanaman hortikultura.", correct: false },
+        { text: "Tanaman stroberi termasuk hortikultura buah.", correct: true },
+        { text: "Tanaman hias tidak termasuk hortikultura.", correct: false }
+      ]
+    };
+
+    let current = 0;
+    let score = 0;
+    let selectedCategory = "";
+    let questions = [];
+
+    // 🔹 Fungsi untuk acak urutan soal
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function startCategory() {
+      const category = document.getElementById("categorySelect").value;
+      if (!category) return alert("Pilih kategori dulu!");
+      selectedCategory = category;
+      questions = shuffle([...allQuestions[category]]); // 🔹 Soal diacak setiap mulai
+      current = 0;
+      score = 0;
+      document.getElementById("category-container").style.display = "none";
+      document.getElementById("quiz-container").style.display = "block";
+      document.getElementById("leaderboard").style.display = "block";
+      document.getElementById("categoryName").textContent = category.toUpperCase();
+      showQuestion();
+      renderLeaderboard();
+    }
+
+    function showQuestion() {
+      if (current < questions.length) {
+        document.getElementById("question").textContent = questions[current].text;
+      } else {
+        endQuiz();
+      }
+    }
+
+    function answer(choice) {
+      if (choice === questions[current].correct) score++;
+      current++;
+      showQuestion();
+    }
+
+    function endQuiz() {
+      document.getElementById("quiz-container").style.display = "none";
+      document.getElementById("result").style.display = "block";
+      document.getElementById("score").textContent = `${score} / ${questions.length}`;
+      const name = prompt("Masukkan nama kamu untuk papan peringkat:");
+      if (name) {
+        const leaderboardKey = `leaderboard_${selectedCategory}`;
+        const leaderboard = JSON.parse(localStorage.getItem(leaderboardKey) || "[]");
+        leaderboard.push({ name, score });
+        leaderboard.sort((a, b) => b.score - a.score);
+        localStorage.setItem(leaderboardKey, JSON.stringify(leaderboard));
+      }
+      renderLeaderboard();
+    }
+
+    function restartQuiz() {
+      questions = shuffle([...allQuestions[selectedCategory]]); // 🔹 Acak lagi saat mengulang
+      current = 0;
+      score = 0;
+      document.getElementById("result").style.display = "none";
+      document.getElementById("quiz-container").style.display = "block";
+      showQuestion();
+    }
+
+    function backToMenu() {
+      document.getElementById("result").style.display = "none";
+      document.getElementById("leaderboard").style.display = "none";
+      document.getElementById("category-container").style.display = "block";
+    }
+
+    function renderLeaderboard() {
+      const leaderboardKey = `leaderboard_${selectedCategory}`;
+      const leaderboard = JSON.parse(localStorage.getItem(leaderboardKey) || "[]");
+      document.getElementById("leaderList").innerHTML = leaderboard
+        .slice(0, 5)
+        .map(p => `<li>${p.name} - ${p.score} poin</li>`)
+        .join("");
+    }
+  </script>
+</body>
+</html>
