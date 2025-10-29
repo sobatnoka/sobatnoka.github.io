@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -8,7 +7,90 @@
   <style>
     body {margin:0;font-family:'Poppins',sans-serif;scroll-behavior:smooth;transition:background .3s,color .3s;}
     header{position:fixed;top:0;left:0;right:0;background:#fff;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:15px 30px;box-shadow:0 2px 6px rgba(0,0,0,.1);}
-    header.dark{background:#222;color:#fff;}
+ /* === Header Umum === */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #28a745;
+  color: #fff;
+  padding: 12px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* === Menu Desktop === */
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: #d4ffd6;
+}
+
+/* === Tombol Menu (HP) === */
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* === Mode Mobile === */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* sembunyikan menu */
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 15px;
+    background: #28a745;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  .nav-links a {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .nav-links a:last-child {
+    border-bottom: none;
+  }
+
+  .menu-toggle {
+    display: block; /* tampilkan tombol menu */
+  }
+
+  /* Saat aktif */
+  .nav-links.active {
+    display: flex;
+    animation: fadeInMenu 0.3s ease forwards;
+  }
+
+  @keyframes fadeInMenu {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}   header.dark{background:#222;color:#fff;}
     header a{margin:0 10px;text-decoration:none;color:inherit;font-weight:600;}
     section{padding:100px 20px;min-height:100vh;}
 center/cover no-repeat;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;}
