@@ -1,1193 +1,253 @@
-<!DOCTYPE html><html lang="id">
+<!doctype html>
+
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgriEdu - Belajar Pertanian, Peternakan, Perikanan</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TaniPintar — Kelas Online Bertani Cerdas</title>
+  <meta name="description" content="Dari Lahan Kosong Jadi Ladang Emas — Belajar Bertani Cerdas Bersama TaniPintar. Kelas online interaktif pertanian, peternakan, dan perikanan budidaya." />
+  <meta property="og:title" content="TaniPintar — Kelas Online Bertani Cerdas" />
+  <meta property="og:description" content="Belajar bertani modern dengan praktisi lapangan. Video, e-book, simulasi, dan magang." />
+  <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=TaniPintar" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.9.2/dist/html2pdf.bundle.min.js"></script>
-  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    /* Simple hero gradient overlay and small UI tweaks */
+    .hero-bg{background-image: linear-gradient(180deg, rgba(4,120,87,0.9), rgba(16,185,129,0.85)), url('https://via.placeholder.com/1600x900.png?text=Pertanian'); background-size: cover; background-position: center;}
+    .glass{backdrop-filter: blur(6px); background: rgba(255,255,255,0.6);}    
+    @media (prefers-reduced-motion: no-preference){
+      .float-up{transform: translateY(12px); animation: floatUp 1.2s ease-out forwards;}
+      @keyframes floatUp{to{transform: translateY(0); opacity:1}}
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
-  <div id="root"></div>  <script type="text/babel">
-    const App = () => {
-      const [page, setPage] = React.useState('home');
-      const [score, setScore] = React.useState(null);
-
-      const generateCertificate = () => {
-        const element = document.getElementById('certificate');
-        html2pdf().from(element).save('sertifikat-agriedu.pdf');
-      };
-
-      const Home = () => (
-        <section className="text-center p-8">
-          <h1 className="text-4xl font-bold text-green-700 mb-4">🌱 AgriEdu</h1>
-          <p className="text-lg mb-6">Belajar Pertanian, Peternakan, dan Perikanan Modern</p>
-          <button onClick={() => setPage('kelas')} className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-xl shadow">Mulai Belajar</button>
-        </section>
-      );
-
-      const Kelas = () => (
-        <section className="p-8">
-          <h2 className="text-2xl font-semibold mb-4">Kelas Pembelajaran</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[{cat:'Pertanian', page:'ebook'}, {cat:'Peternakan', page:'video'}, {cat:'Perikanan', page:'kuis'}].map((item,i)=>(
-              <div key={i} className="bg-white rounded-2xl shadow p-4 hover:shadow-lg transition">
-                <img src={`https://source.unsplash.com/400x200/?${item.cat}`} alt={item.cat} className="rounded-xl mb-3" />
-                <h3 className="font-bold text-lg mb-2">Dasar {item.cat}</h3>
-                <p className="text-sm mb-4">Pelajari dasar dan praktik terbaik dalam bidang {item.cat.toLowerCase()} modern.</p>
-                <button onClick={()=>setPage(item.page)} className="bg-green-600 text-white px-4 py-1 rounded-lg">Masuk</button>
-              </div>
-            ))}
-          </div>
-        </section>
-      );
-
-      const Kuis = () => {
-        const [qIndex, setQIndex] = React.useState(0);
-        const [answers, setAnswers] = React.useState([]);
-        const questions = [
-          {q:'Tanaman padi termasuk monokotil?', a:true},
-          {q:'Lele hidup di air laut?', a:false},
-          {q:'Sapi termasuk hewan ruminansia?', a:true}
-        ];
-
-        const answer = (val) => {
-          const newAnswers = [...answers, val === questions[qIndex].a];
-          if(qIndex < questions.length-1) setQIndex(qIndex+1);
-          else {
-            const result = newAnswers.filter(x=>x).length;
-            setScore(result);
-            setAnswers([]);
-            setPage('hasil');
-          }
-        };
-
-        return (
-          <section className="text-center p-8">
-            <h2 className="text-xl font-semibold mb-4">Kuis Edukasi</h2>
-            <p className="text-lg mb-6">{questions[qIndex].q}</p>
-            <div className="space-x-4">
-              <button onClick={()=>answer(true)} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl">Benar</button>
-              <button onClick={()=>answer(false)} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl">Salah</button>
-            </div>
-          </section>
-        );
-      };
-
-      const Hasil = () => (
-        <section className="text-center p-8">
-          <h2 className="text-2xl font-semibold mb-4">Hasil Kuis</h2>
-          <p className="text-lg mb-4">Skor kamu: <span className="font-bold">{score}/3</span></p>
-          <div id="certificate" className="bg-white border rounded-2xl shadow p-6 inline-block text-left">
-            <h3 className="text-xl font-semibold text-green-700">Sertifikat AgriEdu</h3>
-            <p className="text-sm">Diberikan kepada peserta atas keberhasilan menyelesaikan kuis edukasi AgriEdu dengan skor {score}/3.</p>
-          </div>
-          <div className="mt-4 space-x-3">
-            <button onClick={generateCertificate} className="bg-yellow-500 text-white px-4 py-2 rounded-xl">Unduh Sertifikat</button>
-            <button onClick={()=>setPage('home')} className="bg-gray-500 text-white px-4 py-2 rounded-xl">Kembali</button>
-          </div>
-        </section>
-      );
-
-      const Ebook = () => (
-        <section className="p-8 text-center">
-          <h2 className="text-2xl font-semibold mb-4">E-Book Pertanian</h2>
-          <p className="mb-4 text-sm text-gray-600">Baca langsung dari GitHub atau unduh ke perangkatmu.</p>
-          <iframe src="https://sobatnoka.github.io/ebook-pertanian.pdf" className="w-full h-96 border rounded-xl shadow mb-4"></iframe>
-          <div>
-            <button onClick={()=>setPage('home')} className="bg-gray-600 text-white px-4 py-2 rounded-xl">Kembali</button>
-          </div>
-        </section>
-      );
-
-      const Video = () => (
-        <section className="p-8 text-center">
-          <h2 className="text-2xl font-semibold mb-4">Video Pembelajaran Peternakan</h2>
-          <div className="flex justify-center mb-4">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video Edukasi" className="rounded-xl shadow"></iframe>
-          </div>
-          <button onClick={()=>setPage('home')} className="bg-gray-600 text-white px-4 py-2 rounded-xl">Kembali</button>
-        </section>
-      );
-
-      return (
+<body class="antialiased text-gray-800 bg-gray-50">
+  <!-- NAV -->
+  <header class="w-full bg-white shadow">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <img src="https://via.placeholder.com/48x48.png?text=TP" alt="TaniPintar" class="w-10 h-10 rounded-md" />
         <div>
-          <nav className="flex justify-between items-center px-6 py-3 bg-white shadow sticky top-0 z-10">
-            <h1 className="text-2xl font-bold text-green-700">AgriEdu</h1>
-            <div className="space-x-4 text-sm md:text-base">
-              <button onClick={()=>setPage('home')} className="hover:text-green-600">Home</button>
-              <button onClick={()=>setPage('kelas')} className="hover:text-green-600">Kelas</button>
-              <button onClick={()=>setPage('ebook')} className="hover:text-green-600">E-Book</button>
-              <button onClick={()=>setPage('video')} className="hover:text-green-600">Video</button>
-              <button onClick={()=>setPage('kuis')} className="hover:text-green-600">Kuis</button>
-            </div>
-          </nav>
-
-          {page==='home' && <Home />}
-          {page==='kelas' && <Kelas />}
-          {page==='kuis' && <Kuis />}
-          {page==='hasil' && <Hasil />}
-          {page==='ebook' && <Ebook />}
-          {page==='video' && <Video />}
-
-          <footer className="text-center py-6 mt-10 bg-green-700 text-white">
-            <p>© 2025 AgriEdu - Edukasi Pertanian, Peternakan, Perikanan</p>
-          </footer>
+          <h1 class="font-bold text-lg">TaniPintar</h1>
+          <p class="text-xs text-green-600">Belajar Bertani Cerdas</p>
         </div>
-      );
-    };
-
-    ReactDOM.render(<App />, document.getElementById('root'));
-  </script></body>
-</html>
-
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SobatNoka 🌾 | Bersama Membangun Pertanian Modern</title>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      background: #f9fff9;
-      color: #333;
-    }
-
-    /* === HEADER === */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #28a745;
-      color: #fff;
-      padding: 12px 20px;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      transition: top 0.4s ease;
-    }
-
-    .logo {
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 20px;
-    }
-
-    .nav-links a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .menu-toggle {
-      display: none;
-      font-size: 24px;
-      background: none;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        right: 15px;
-        background: #28a745;
-        border-radius: 10px;
-        padding: 10px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      }
-
-      .nav-links.active {
-        display: flex;
-        animation: fadeInMenu 0.3s ease forwards;
-      }
-
-      @keyframes fadeInMenu {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
-      .menu-toggle {
-        display: block;
-      }
-    }
-
-    /* === HERO === */
-    section {
-      padding: 80px 20px;
-      text-align: center;
-    }
-
-    #home {
-      background: linear-gradient(135deg, #28a745, #85e085);
-      color: white;
-      padding-top: 120px;
-      padding-bottom: 120px;
-    }
-
-    h1 {
-      font-size: 36px;
-    }
-
-    h2 {
-      color: #28a745;
-      font-size: 28px;
-    }
-
-    /* === PRODUK === */
-    .produk-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      margin-top: 40px;
-    }
-
-    .produk-card {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
-    }
-
-    .produk-card:hover {
-      transform: translateY(-5px);
-    }
-
-    /* === KEUNTUNGAN === */
-    ul {
-      list-style: none;
-      padding: 0;
-      max-width: 600px;
-      margin: 20px auto;
-      text-align: left;
-    }
-
-    ul li {
-      background: #e8ffe8;
-      margin: 10px 0;
-      padding: 10px 15px;
-      border-radius: 10px;
-    }
-
-    /* === VIDEO SECTION === */
-    .video-section {
-      text-align: center;
-      padding: 60px 20px;
-      background: #f8fff8;
-    }
-
-    .video-container {
-      max-width: 800px;
-      margin: 0 auto;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    .video-container video {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* === FORM === */
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    input, button {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-
-    button {
-      background: #28a745;
-      color: white;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #218838;
-    }
-
-    /* === POPUP === */
-    .popup-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
-      z-index: 5000;
-    }
-
-    .popup-box {
-      background: #28a745;
-      color: #fff;
-      padding: 30px;
-      border-radius: 16px;
-      text-align: center;
-      max-width: 320px;
-      transform: scale(0.8);
-      opacity: 0;
-      animation: fadeInScale 0.4s ease forwards;
-    }
-
-    .popup-error {
-      background: #dc3545;
-    }
-
-    @keyframes fadeInScale {
-      0% { transform: scale(0.8); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    .close-btn {
-      margin-top: 15px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      background: #fff;
-      color: #28a745;
-      font-weight: 600;
-    }
-
-    .error-btn {
-      color: #dc3545;
-    }
-  </style>
-</head>
-
-<body>
-  <!-- HEADER -->
-  <header class="navbar" id="navbar">
-    <div class="logo">🌾 <b>SobatNoka</b></div>
-    <button class="menu-toggle" id="menuToggle">☰</button>
-    <nav id="navMenu" class="nav-links">
-      <a href="#home">Beranda</a>
-      <a href="#produk">Produk</a>
-      <a href="#keuntungan">Keuntungan</a>
-      <a href="#daftar">Daftar</a>
-    </nav>
-  </header>
-
-  <!-- HERO -->
-  <section id="home">
-    <h1>Selamat Datang di SobatNoka 🌱</h1>
-    <p>Bersama membangun pertanian modern dengan solusi digital terintegrasi.</p>
-  </section>
-
-  <!-- PRODUK -->
-  <section id="produk">
-    <h2>Produk SobatNoka</h2>
-    <div class="produk-grid">
-      <div class="produk-card"><h3>TaniPintar</h3><p>Solusi digital cerdas untuk pertanian presisi.</p></div>
-      <div class="produk-card"><h3>TaniLink</h3><p>Konektivitas antar pelaku agribisnis dengan efisien.</p></div>
-      <div class="produk-card"><h3>BioGrow</h3><p>Pupuk organik modern berbasis bioteknologi.</p></div>
-      <div class="produk-card"><h3>BibitKu</h3><p>Pusat distribusi benih dan bibit unggul untuk petani.</p></div>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#agenda" class="hover:text-green-600">Agenda</a>
+        <a href="#program" class="hover:text-green-600">Program</a>
+        <a href="#instruktur" class="hover:text-green-600">Instruktur</a>
+        <a href="#pricing" class="hover:text-green-600">Harga</a>
+        <a href="#faq" class="hover:text-green-600">FAQ</a>
+        <a href="#daftar" class="ml-3 inline-block bg-green-600 text-white px-4 py-2 rounded-lg shadow">Daftar Sekarang</a>
+      </nav>
+      <button class="md:hidden p-2 rounded-md text-gray-700" aria-label="menu" onclick="document.getElementById('mobile').classList.toggle('hidden')">☰</button>
     </div>
-  </section>
+    <div id="mobile" class="md:hidden hidden px-6 pb-4">
+      <a href="#agenda" class="block py-2">Agenda</a>
+      <a href="#program" class="block py-2">Program</a>
+      <a href="#instruktur" class="block py-2">Instruktur</a>
+      <a href="#pricing" class="block py-2">Harga</a>
+      <a href="#faq" class="block py-2">FAQ</a>
+    </div>
+  </header>  <!-- HERO -->  <section class="hero-bg text-white">
+    <div class="max-w-6xl mx-auto px-6 py-20 flex flex-col lg:flex-row items-center gap-12">
+      <div class="lg:w-1/2">
+        <span class="inline-block bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">Kelas Online • Interaktif • Sertifikat</span>
+        <h2 class="mt-6 text-4xl lg:text-5xl font-extrabold leading-tight">Pengen bisa bertani?<br class="hidden md:block"> Yuk belajar bersama <span class="text-green-200">TaniPintar</span></h2>
+        <p class="mt-4 text-lg text-green-50/90">Dari lahan kosong jadi ladang emas — pelajari teknik pertanian, peternakan & perikanan budidaya dengan praktisi. Modul video, e-book, diskusi, dan praktik nyata.</p>
+        <div class="mt-6 flex items-center gap-4">
+          <a href="#daftar" class="inline-block bg-white text-green-700 font-semibold px-6 py-3 rounded-lg shadow-lg">Daftar Sekarang</a>
+          <a href="#program" class="inline-block border border-white px-5 py-3 rounded-lg">Lihat Program</a>
+        </div>
+        <div class="mt-6 text-sm text-green-100">Kuota terbatas — Periode pendaftaran: <strong>1–30 November 2025</strong></div>
+      </div><div class="lg:w-1/2">
+    <div class="bg-white rounded-2xl overflow-hidden shadow-2xl float-up">
+      <img src="https://via.placeholder.com/720x420.png?text=Video+Preview" alt="Preview" class="w-full h-64 object-cover">
+      <div class="p-4">
+        <h3 class="font-bold">Preview Kelas: Teknik Tanam & Irigasi Hemat</h3>
+        <p class="text-sm mt-2 text-gray-600">Video pendek & ringkasan modul. Tonton cuplikan materi untuk melihat kualitas pembelajaran.</p>
+        <div class="mt-3 flex gap-3">
+          <a href="#" class="text-sm text-green-700 font-semibold">Tonton Cuplikan</a>
+          <a href="#" class="text-sm text-gray-500">Lihat Silabus</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <!-- KEUNTUNGAN -->
-  <section id="keuntungan">
-    <h2>Keuntungan Menjadi SobatNoka</h2>
-    <ul>
-      <li>🌿 Akses pelatihan dan teknologi pertanian terbaru</li>
-      <li>🤝 Terhubung dengan komunitas petani modern</li>
-      <li>💰 Akses modal dan pasar lebih mudah</li>
-      <li>📊 Data dan insight untuk meningkatkan hasil panen</li>
+  </section>  <!-- TRUST BAR -->  <section class="max-w-6xl mx-auto px-6 py-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-sm text-gray-600">
+      <div class="p-4 bg-white rounded-lg shadow"><strong>+2000</strong><div>Peserta Terdaftar</div></div>
+      <div class="p-4 bg-white rounded-lg shadow"><strong>30+</strong><div>Instruktur Praktisi</div></div>
+      <div class="p-4 bg-white rounded-lg shadow"><strong>90%</strong><div>Peserta Puas</div></div>
+      <div class="p-4 bg-white rounded-lg shadow"><strong>Magang</strong><div>Kesempatan di Mitra</div></div>
+    </div>
+  </section>  <!-- PROGRAM -->  <section id="program" class="max-w-6xl mx-auto px-6 py-12">
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div class="bg-white rounded-xl p-6 shadow-md">
+        <h3 class="font-bold text-xl">Kelas Dasar Bertani Cerdas</h3>
+        <p class="mt-3 text-sm text-gray-600">Mulai dari nol: jenis tanah, pemilihan benih, pupuk organik, pengairan, dan praktik kebun kecil.</p>
+        <ul class="mt-4 text-sm space-y-2 text-gray-700">
+          <li>• Modul video + e-book</li>
+          <li>• Praktik lapangan & proyek akhir</li>
+          <li>• Sertifikat digital</li>
+        </ul>
+      </div><div class="bg-white rounded-xl p-6 shadow-md">
+    <h3 class="font-bold text-xl">Kelas Peternakan Pintar</h3>
+    <p class="mt-3 text-sm text-gray-600">Kesehatan ternak, manajemen pakan efisien, dan cara meningkatkan produktivitas.</p>
+    <ul class="mt-4 text-sm space-y-2 text-gray-700">
+      <li>• Studi kasus peternakan skala kecil</li>
+      <li>• Panduan pakan & sanitasi</li>
+      <li>• Sesi tanya jawab langsung</li>
     </ul>
-  </section>
-
-  <!-- VIDEO -->
-  <section id="video" class="video-section">
-    <h2>Kenali SobatNoka Lebih Dekat 🎥</h2>
-    <p>Tonton video singkat tentang bagaimana SobatNoka membantu petani dan ekosistem pertanian modern.</p>
-    <div class="video-container">
-      <video controls autoplay muted loop>
-        <source src="https://raw.githubusercontent.com/sobatnoka/sobatnoka.github.io/3a3335eb1f203eef80cb271ce8adca74f329d758/f03b0fd5d784e018fbde2b67eaad6ce2_1761736116714.mp4" type="video/mp4">
-        Browser kamu tidak mendukung video.
-      </video>
-    </div>
-  </section>
-
-  <!-- FORM PENDAFTARAN -->
-  <section id="daftar">
-    <h2>Daftar SobatNoka Sekarang</h2>
-    <form id="sobatNokaForm">
-      <input type="text" name="nama" placeholder="Nama Lengkap" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <input type="tel" name="telepon" placeholder="No. Telepon" required>
-      <button type="submit">Daftar Sekarang</button>
-    </form>
-  </section>
-
-  <!-- POPUP -->
-  <div id="successModal" class="popup-overlay">
-    <div class="popup-box">
-      <h3>✅ Pendaftaran Berhasil</h3>
-      <p>Selamat bergabung bersama <b>SobatNoka</b> 🌱</p>
-      <button onclick="closeModal('successModal')" class="close-btn">Tutup</button>
-    </div>
   </div>
 
-  <div id="errorModal" class="popup-overlay">
-    <div class="popup-box popup-error">
-      <h3>❌ Gagal Mengirim</h3>
-      <p>Terjadi kesalahan. Mohon coba lagi nanti.</p>
-      <button onclick="closeModal('errorModal')" class="close-btn error-btn">Tutup</button>
-    </div>
+  <div class="bg-white rounded-xl p-6 shadow-md">
+    <h3 class="font-bold text-xl">Kelas Perikanan Budidaya</h3>
+    <p class="mt-3 text-sm text-gray-600">Budidaya lele, nila, & udang vaname — teknik kolam & sistem modern.</p>
+    <ul class="mt-4 text-sm space-y-2 text-gray-700">
+      <li>• Teknis pemeliharaan & nutrisi</li>
+      <li>• Monitoring kualitas air</li>
+      <li>• Pendampingan teknis</li>
+    </ul>
   </div>
+</div>
 
-  <script>
-    // MENU MOBILE
-    const menuToggle = document.getElementById("menuToggle");
-    const navMenu = document.getElementById("navMenu");
-    const navbar = document.getElementById("navbar");
-
-    menuToggle.addEventListener("click", () => {
-      navMenu.classList.toggle("active");
-    });
-
-    // AUTO HIDE HEADER
-    let lastScrollTop = 0;
-    window.addEventListener("scroll", () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      if (scrollTop > lastScrollTop && scrollTop > 60) navbar.style.top = "-80px";
-      else navbar.style.top = "0";
-      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-    });
-
-    // FORM GOOGLE SHEETS
-    document.getElementById("sobatNokaForm").addEventListener("submit", function(e){
-      e.preventDefault();
-      let data={nama:this.nama.value,email:this.email.value,telepon:this.telepon.value};
-
-      fetch("https://script.google.com/macros/s/AKfycbyMbVgcE2OwAd-INaIIDhLHfXHqTQgwL-8jTCGUQF8kGCMxBjMUz9rVgYXR0zzxWGO6/exec",{
-        method:"POST",
-        body:JSON.stringify(data)
-      })
-      .then(res=>res.text())
-      .then(res=>{
-        document.getElementById("successModal").style.display="flex";
-        this.reset();
-      })
-      .catch(err=>{
-        document.getElementById("errorModal").style.display="flex";
-      });
-    });
-
-    function closeModal(id){
-      document.getElementById(id).style.display="none";
-    }
-  </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E-Book Pertanian Edukatif</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-    }
-  </style>
-</head>
-<body class="bg-green-50 text-gray-800">
-
-  <!-- Header -->
-  <header class="bg-green-700 text-white text-center py-4 text-2xl font-bold shadow">
-    📗 E-Book Pertanian Edukatif
-  </header>
-
-  <!-- Main Content -->
-  <main class="max-w-6xl mx-auto p-4">
-    <section id="ebookList" class="grid sm:grid-cols-2 md:grid-cols-3 gap-6"></section>
-
-    <section id="viewer" class="hidden mt-6">
-      <button id="backBtn" class="mb-4 bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800 transition">⬅ Kembali</button>
-      <iframe id="pdfViewer" class="w-full h-[80vh] border rounded-xl shadow" src=""></iframe>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="text-center py-4 text-sm text-gray-600">
-    © 2025 Edukasi Pertanian Indonesia 🌾 | SobatNoka
-  </footer>
-
-  <script>
-    const ebookListDiv = document.getElementById("ebookList");
-    const viewer = document.getElementById("viewer");
-    const pdfViewer = document.getElementById("pdfViewer");
-    const backBtn = document.getElementById("backBtn");
-
-    // Ganti URL ini ke file JSON di repo GitHub kamu
-    const ebookListURL = "https://github.com/sobatnoka/sobatnoka.github.io/blob/ddbcd6ee2ea12c93c86db41fa02e2e0d0dd1d987/Hortikultura_Level1_Dasar.pdf";
-
-    async function loadEbooks() {
-      try {
-        const response = await fetch(ebookListURL);
-        const ebooks = await response.json();
-
-        ebookListDiv.innerHTML = ebooks.map(e => `
-          <div class="bg-white p-5 rounded-xl shadow hover:shadow-lg transition transform hover:-translate-y-1 cursor-pointer"
-               onclick="openEbook('${e.url}')">
-            <div class="h-40 bg-green-100 flex items-center justify-center rounded-lg mb-3">
-              <span class="text-4xl">📘</span>
-            </div>
-            <h3 class="text-lg font-bold mb-1 text-green-800">${e.title}</h3>
-            <p class="text-sm text-gray-600">${e.desc}</p>
+  </section>  <!-- AGENDA / SCHEDULE -->  <section id="agenda" class="bg-green-50 py-12">
+    <div class="max-w-4xl mx-auto px-6">
+      <h3 class="font-bold text-2xl">Agenda & Alur Kegiatan</h3>
+      <ol class="mt-6 space-y-4 text-gray-700">
+        <li><strong>1 - 7 Nov 2025:</strong> Orientasi & perkenalan instruktur</li>
+        <li><strong>8 - 21 Nov 2025:</strong> Modul inti (video + tugas mingguan)</li>
+        <li><strong>22 - 28 Nov 2025:</strong> Proyek praktik & review instruktur</li>
+        <li><strong>29 Nov 2025:</strong> Presentasi proyek & penutupan</li>
+      </ol>
+    </div>
+  </section>  <!-- INSTRUCTORS -->  <section id="instruktur" class="max-w-6xl mx-auto px-6 py-12">
+    <h3 class="font-bold text-2xl">Instruktur Praktisi</h3>
+    <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Card 1 -->
+      <div class="bg-white rounded-lg p-4 shadow flex flex-col items-center text-center">
+        <img src="https://via.placeholder.com/120.png?text=Guru" alt="Instruktur" class="w-24 h-24 rounded-full object-cover">
+        <h4 class="mt-3 font-semibold">Budi Santoso</h4>
+        <p class="text-sm text-gray-600">Praktisi hortikultura & urban farming</p>
+      </div>
+      <!-- Card 2 -->
+      <div class="bg-white rounded-lg p-4 shadow flex flex-col items-center text-center">
+        <img src="https://via.placeholder.com/120.png?text=Guru" alt="Instruktur" class="w-24 h-24 rounded-full object-cover">
+        <h4 class="mt-3 font-semibold">Siti Maharani</h4>
+        <p class="text-sm text-gray-600">Ahli budidaya perikanan</p>
+      </div>
+      <!-- Card 3 -->
+      <div class="bg-white rounded-lg p-4 shadow flex flex-col items-center text-center">
+        <img src="https://via.placeholder.com/120.png?text=Guru" alt="Instruktur" class="w-24 h-24 rounded-full object-cover">
+        <h4 class="mt-3 font-semibold">Andi Wirawan</h4>
+        <p class="text-sm text-gray-600">Konsultan peternakan skala kecil</p>
+      </div>
+      <!-- Card 4 -->
+      <div class="bg-white rounded-lg p-4 shadow flex flex-col items-center text-center">
+        <img src="https://via.placeholder.com/120.png?text=Guru" alt="Instruktur" class="w-24 h-24 rounded-full object-cover">
+        <h4 class="mt-3 font-semibold">Dewi Rahma</h4>
+        <p class="text-sm text-gray-600">Spesialis smart farming & IoT</p>
+      </div>
+    </div>
+  </section>  <!-- PRICING -->  <section id="pricing" class="max-w-6xl mx-auto px-6 py-12">
+    <h3 class="font-bold text-2xl">Paket & Harga</h3>
+    <div class="mt-6 grid md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow">
+        <h4 class="font-semibold text-lg">Paket Basic</h4>
+        <p class="text-3xl font-bold mt-3">Rp99.000</p>
+        <p class="mt-2 text-sm text-gray-600">Akses modul dasar & e-book</p>
+        <a href="#daftar" class="mt-4 inline-block bg-green-600 text-white px-4 py-2 rounded">Daftar</a>
+      </div>
+      <div class="bg-white border-2 border-green-600 rounded-xl p-6 shadow-lg">
+        <h4 class="font-semibold text-lg">Paket Pro <span class="text-sm text-gray-500">(Best value)</span></h4>
+        <p class="text-3xl font-bold mt-3">Rp249.000</p>
+        <p class="mt-2 text-sm text-gray-600">Akses semua kelas + sesi live</p>
+        <a href="#daftar" class="mt-4 inline-block bg-green-600 text-white px-4 py-2 rounded">Daftar</a>
+      </div>
+      <div class="bg-white rounded-xl p-6 shadow">
+        <h4 class="font-semibold text-lg">Paket Premium</h4>
+        <p class="text-3xl font-bold mt-3">Rp499.000</p>
+        <p class="mt-2 text-sm text-gray-600">Termasuk magang & konsultasi 1-on-1</p>
+        <a href="#daftar" class="mt-4 inline-block bg-green-600 text-white px-4 py-2 rounded">Daftar</a>
+      </div>
+    </div>
+  </section>  <!-- TESTIMONIALS -->  <section class="bg-white py-12">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h3 class="font-bold text-2xl">Cerita Peserta</h3>
+      <div class="mt-6 grid md:grid-cols-3 gap-6">
+        <div class="p-6 bg-green-50 rounded-lg shadow text-left">
+          <p class="italic">"Kelasnya realistis, dari teori langsung dipraktikkan. Hasil panen meningkat!"</p>
+          <p class="mt-3 font-semibold">— Rahmat, Petani</p>
+        </div>
+        <div class="p-6 bg-green-50 rounded-lg shadow text-left">
+          <p class="italic">"Bimbingan instruktur sangat membantu. Sangat direkomendasikan."</p>
+          <p class="mt-3 font-semibold">— Lina, Pemula</p>
+        </div>
+        <div class="p-6 bg-green-50 rounded-lg shadow text-left">
+          <p class="italic">"Materinya modern, cocok untuk urban farming juga."</p>
+          <p class="mt-3 font-semibold">— Fajar, Pengusaha Mikro</p>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- FAQ -->  <section id="faq" class="max-w-4xl mx-auto px-6 py-12">
+    <h3 class="font-bold text-2xl">Pertanyaan Umum</h3>
+    <div class="mt-6 space-y-4">
+      <details class="bg-white p-4 rounded-lg shadow"><summary class="font-semibold">Siapa saja yang bisa ikut?</summary><div class="mt-2 text-sm text-gray-700">Siapa pun—pemula, petani pemula, anak muda yang ingin belajar urban farming, hingga pelaku usaha kecil.</div></details>
+      <details class="bg-white p-4 rounded-lg shadow"><summary class="font-semibold">Apakah ada sertifikat?</summary><div class="mt-2 text-sm text-gray-700">Ya, setiap peserta yang menyelesaikan tugas dan proyek mendapatkan sertifikat digital.</div></details>
+      <details class="bg-white p-4 rounded-lg shadow"><summary class="font-semibold">Apakah ada magang?</summary><div class="mt-2 text-sm text-gray-700">Untuk paket Premium tersedia kesempatan magang di mitra kami.</div></details>
+    </div>
+  </section>  <!-- CTA / REGISTER FORM -->  <section id="daftar" class="bg-green-600 text-white py-12">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-6 items-center">
+        <div>
+          <h3 class="text-2xl font-bold">Daftar Sekarang & Mulai Bertani</h3>
+          <p class="mt-2 text-green-100">Isi data singkat — tim kami akan menghubungi untuk konfirmasi pembayaran dan akses kelas.</p>
+        </div>
+        <form class="bg-white p-6 rounded-lg shadow text-gray-800" action="#" method="POST">
+          <div class="grid grid-cols-1 gap-3">
+            <input name="nama" required placeholder="Nama Lengkap" class="p-3 border rounded" />
+            <input name="email" type="email" required placeholder="Email" class="p-3 border rounded" />
+            <input name="hp" placeholder="No. WhatsApp" class="p-3 border rounded" />
+            <select name="paket" class="p-3 border rounded">
+              <option value="basic">Paket Basic - Rp99.000</option>
+              <option value="pro">Paket Pro - Rp249.000</option>
+              <option value="premium">Paket Premium - Rp499.000</option>
+            </select>
+            <button type="submit" class="mt-2 bg-green-600 text-white px-4 py-3 rounded">Kirim Pendaftaran</button>
           </div>
-        `).join('');
-      } catch (err) {
-        ebookListDiv.innerHTML = `<p class="text-red-600 text-center">❌ Gagal memuat daftar eBook dari GitHub.</p>`;
-        console.error(err);
-      }
-    }
-
-    function openEbook(url) {
-      viewer.classList.remove("hidden");
-      ebookListDiv.classList.add("hidden");
-      pdfViewer.src = url;
-    }
-
-    backBtn.addEventListener("click", () => {
-      viewer.classList.add("hidden");
-      ebookListDiv.classList.remove("hidden");
-      pdfViewer.src = "";
-    });
-
-    loadEbooks();
-  </script>
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kuis Edukasi Pertanian 🌾</title>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom right, #8bc34a, #558b2f);
-      color: #fff;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 500px;
-      margin: 50px auto;
-      background: rgba(0, 0, 0, 0.25);
-      padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-    button {
-      background: #33691e;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      margin: 10px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover {
-      background: #689f38;
-    }
-    select {
-      padding: 8px;
-      border-radius: 8px;
-      border: none;
-      margin-bottom: 20px;
-    }
-    .leaderboard {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 10px;
-      margin-top: 20px;
-    }
-    .timer {
-      font-size: 20px;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 8px 15px;
-      display: inline-block;
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
-    h1, h2, h3 {
-      margin-bottom: 15px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>🌾 Kuis Edukasi Pertanian</h1>
-
-    <div id="category-container">
-      <h2>Pilih Kategori</h2>
-      <select id="categorySelect">
-        <option value="">-- Pilih Kategori --</option>
-        <option value="tanaman">🌱 Tanaman</option>
-        <option value="peternakan">🐄 Peternakan</option>
-        <option value="perikanan">🐟 Perikanan</option>
-        <option value="hortikultura">🌼 Hortikultura</option>
-      </select><br />
-      <button onclick="startCategory()">Mulai Kuis</button>
+        </form>
+      </div>
     </div>
-
-    <div id="quiz-container" style="display: none">
-      <div class="timer">⏳ Waktu: <span id="time">20</span> detik</div>
-      <h2 id="question"></h2>
-      <button onclick="answer(true)">Benar</button>
-      <button onclick="answer(false)">Salah</button>
+  </section>  <!-- FOOTER -->  <footer class="bg-gray-900 text-gray-200 py-8">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6">
+      <div>
+        <h4 class="font-bold">TaniPintar</h4>
+        <p class="text-sm mt-2">Platform pendidikan pertanian modern. Hubungi kami untuk kerjasama mitra.</p>
+      </div>
+      <div>
+        <h5 class="font-semibold">Kontak</h5>
+        <p class="text-sm mt-2">email: info@tanipintar.id<br/>WA: +62 812-3456-7890</p>
+      </div>
+      <div>
+        <h5 class="font-semibold">Ikuti Kami</h5>
+        <div class="mt-2 flex gap-3">
+          <a href="#">Instagram</a>
+          <a href="#">YouTube</a>
+          <a href="#">TikTok</a>
+        </div>
+      </div>
     </div>
-
-    <div id="result" style="display: none">
-      <h2>Skor Akhir: <span id="score"></span></h2>
-      <button onclick="restartQuiz()">Ulangi</button>
-      <button id="shareBtn">📲 Bagikan ke WhatsApp</button>
-    </div>
-
-    <div class="leaderboard" id="leaderboard" style="display: none">
-      <h3>🏆 Papan Peringkat <span id="categoryName"></span></h3>
-      <ul id="leaderList"></ul>
-    </div>
-  </div>
-
-  <script>
-    const allQuestions = {
-      tanaman: [
-        { text: "Padi adalah tanaman pangan utama di Indonesia.", correct: true },
-        { text: "Jagung termasuk tanaman hortikultura.", correct: false },
-        { text: "Tanaman kedelai memerlukan lahan yang tergenang air.", correct: false },
-        { text: "Pupuk NPK mengandung unsur Nitrogen, Fosfor, dan Kalium.", correct: true },
-        { text: "Tebu digunakan untuk menghasilkan gula.", correct: true },
-        { text: "Singkong termasuk tanaman buah.", correct: false }
-      ],
-      peternakan: [
-        { text: "Sapi merupakan hewan ruminansia.", correct: true },
-        { text: "Ayam termasuk hewan herbivora.", correct: false },
-        { text: "Kambing tidak bisa mencerna rumput.", correct: false },
-        { text: "Peternakan modern menggunakan sistem kandang tertutup (closed house).", correct: true },
-        { text: "Susu sapi tidak mengandung protein.", correct: false },
-        { text: "Ayam pedaging disebut broiler.", correct: true }
-      ],
-      perikanan: [
-        { text: "Ikan lele hidup di air asin.", correct: false },
-        { text: "Udang vaname termasuk jenis udang air laut.", correct: true },
-        { text: "Kolam terpal bisa digunakan untuk budidaya ikan nila.", correct: true },
-        { text: "Pakan ikan harus mengandung protein tinggi.", correct: true },
-        { text: "Aerator digunakan untuk meningkatkan oksigen dalam air.", correct: true },
-        { text: "Tambak udang hanya bisa dibuat di pegunungan.", correct: false }
-      ],
-      hortikultura: [
-        { text: "Cabai, tomat, dan bawang termasuk tanaman hortikultura.", correct: true },
-        { text: "Mangga termasuk tanaman semusim.", correct: false },
-        { text: "Sayuran daun termasuk kelompok tanaman hortikultura.", correct: true },
-        { text: "Pupuk kandang tidak boleh digunakan untuk tanaman hortikultura.", correct: false },
-        { text: "Hortikultura mencakup tanaman buah, sayur, dan bunga.", correct: true },
-        { text: "Kentang termasuk tanaman serealia.", correct: false }
-      ]
-    };
-
-    let current = 0;
-    let score = 0;
-    let selectedCategory = "";
-    let questions = [];
-    let timer;
-    let timeLeft = 20;
-
-    function shuffle(array) {
-      return array.sort(() => Math.random() - 0.5);
-    }
-
-    function startCategory() {
-      const category = document.getElementById("categorySelect").value;
-      if (!category) return alert("Pilih kategori dulu!");
-      selectedCategory = category;
-      questions = shuffle([...allQuestions[category]]).slice(0, 5);
-      document.getElementById("category-container").style.display = "none";
-      document.getElementById("quiz-container").style.display = "block";
-      document.getElementById("leaderboard").style.display = "block";
-      document.getElementById("categoryName").textContent = category.toUpperCase();
-      showQuestion();
-      renderLeaderboard();
-    }
-
-    function startTimer() {
-      clearInterval(timer);
-      timeLeft = 20;
-      document.getElementById("time").textContent = timeLeft;
-      timer = setInterval(() => {
-        timeLeft--;
-        document.getElementById("time").textContent = timeLeft;
-        if (timeLeft <= 0) {
-          clearInterval(timer);
-          current++;
-          showQuestion();
-        }
-      }, 1000);
-    }
-
-    function showQuestion() {
-      if (current < questions.length) {
-        document.getElementById("question").textContent = questions[current].text;
-        startTimer();
-      } else {
-        clearInterval(timer);
-        endQuiz();
-      }
-    }
-
-    function answer(choice) {
-      if (choice === questions[current].correct) score++;
-      current++;
-      clearInterval(timer);
-      showQuestion();
-    }
-
-    function endQuiz() {
-      document.getElementById("quiz-container").style.display = "none";
-      document.getElementById("result").style.display = "block";
-      document.getElementById("score").textContent = `${score} / ${questions.length}`;
-      const name = prompt("Masukkan nama kamu untuk papan peringkat:");
-      if (name) {
-        const leaderboardKey = `leaderboard_${selectedCategory}`;
-        const leaderboard = JSON.parse(localStorage.getItem(leaderboardKey) || "[]");
-        leaderboard.push({ name, score });
-        leaderboard.sort((a, b) => b.score - a.score);
-        localStorage.setItem(leaderboardKey, JSON.stringify(leaderboard));
-      }
-      renderLeaderboard();
-
-      // Tombol share
-      document.getElementById("shareBtn").onclick = () => {
-        const text = `Aku baru dapat skor ${score}/${questions.length} di Kuis Edukasi Pertanian 🌾 kategori ${selectedCategory.toUpperCase()}! Coba kamu juga!`;
-        const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
-        window.open(url, "_blank");
-      };
-    }
-
-    function restartQuiz() {
-      current = 0;
-      score = 0;
-      questions = shuffle([...allQuestions[selectedCategory]]).slice(0, 5);
-      document.getElementById("result").style.display = "none";
-      document.getElementById("quiz-container").style.display = "block";
-      showQuestion();
-    }
-
-    function renderLeaderboard() {
-      const leaderboardKey = `leaderboard_${selectedCategory}`;
-      const leaderboard = JSON.parse(localStorage.getItem(leaderboardKey) || "[]");
-      document.getElementById("leaderList").innerHTML = leaderboard
-        .slice(0, 5)
-        .map(p => `<li>${p.name} - ${p.score} poin</li>`)
-        .join("");
-    }
-  </script>
-</body>
-</html>
-
-
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SobatNoka - Bersama Tumbuh Lebih Pintar</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {margin:0;font-family:'Poppins',sans-serif;scroll-behavior:smooth;transition:background .3s,color .3s;}
-    header{position:fixed;top:0;left:0;right:0;background:#fff;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:15px 30px;box-shadow:0 2px 6px rgba(0,0,0,.1);}
- /* === Header Umum === */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #28a745;
-  color: #fff;
-  padding: 12px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
-.logo {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-/* === Menu Desktop === */
-.nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-links a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s;
-}
-
-.nav-links a:hover {
-  color: #d4ffd6;
-}
-
-/* === Tombol Menu (HP) === */
-.menu-toggle {
-  display: none;
-  font-size: 24px;
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-}
-
-/* === Mode Mobile === */
-@media (max-width: 768px) {
-  .nav-links {
-    display: none; /* sembunyikan menu */
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    right: 15px;
-    background: #28a745;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  }
-
-  .nav-links a {
-    padding: 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
-  }
-
-  .nav-links a:last-child {
-    border-bottom: none;
-  }
-
-  .menu-toggle {
-    display: block; /* tampilkan tombol menu */
-  }
-
-  /* Saat aktif */
-  .nav-links.active {
-    display: flex;
-    animation: fadeInMenu 0.3s ease forwards;
-  }
-
-  @keyframes fadeInMenu {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-}   header.dark{background:#222;color:#fff;}
-    header a{margin:0 10px;text-decoration:none;color:inherit;font-weight:600;}
-    section{padding:100px 20px;min-height:100vh;}
-center/cover no-repeat;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center;}
-    .hero h1{font-size:3rem;margin:0;}
-    .typing{border-right:2px solid #fff;white-space:nowrap;overflow:hidden;animation:typing 4s steps(30,end) infinite alternate;}
-    @keyframes typing{from{width:0}to{width:100%}}
-    .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
-    .card{background:#fff;padding:20px;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,.1);transition:.3s;opacity:0;transform:translateY(30px);}
-    .card.visible{opacity:1;transform:translateY(0);transition:all .6s ease-in-out;}
-    .card:hover{transform:scale(1.05);box-shadow:0 6px 12px rgba(0,0,0,.2);}
-    form{max-width:400px;margin:auto;display:flex;flex-direction:column;gap:15px;}
-    input,button{padding:12px;border-radius:8px;border:1px solid #ccc;font-size:1rem;}
-    button{background:#28a745;color:#fff;border:none;cursor:pointer;}
-    button:hover{background:#218838;}
-    footer{background:#222;color:#fff;padding:40px 20px;text-align:center;}
-    .scroll-progress{position:fixed;top:0;left:0;height:5px;background:#28a745;width:0;z-index:2000;}
-    #backToTop{position:fixed;bottom:30px;right:30px;background:#28a745;color:#fff;border:none;padding:12px 15px;border-radius:50%;cursor:pointer;display:none;}
-    #loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;display:flex;justify-content:center;align-items:center;z-index:3000;}
-    #loader div{border:6px solid #f3f3f3;border-top:6px solid #28a745;border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite;}
-    @keyframes spin{100%{transform:rotate(360deg)}}
-    body.dark{background:#111;color:#eee;}
-    body.dark .card{background:#333;color:#eee;}
-  </style>
-</head>
-  <script>
-  // Toggle menu di layar kecil
-  const menuToggle = document.getElementById("menuToggle");
-  const navMenu = document.getElementById("navMenu");
-
-  menuToggle.addEventListener("click", () => {
-    navMenu.classList.toggle("active");
-  });
-</script>
-<body>
-  <!-- Loading Screen -->
-  <div id="loader"><div></div></div>
-  <!-- Scroll progress bar -->
-  <div class="scroll-progress" id="scrollBar"></div>
-
-  <!-- Header -->
-  <header id="navbar">
-    <div class="logo"><strong>SobatNoka</strong></div>
-    <nav>
-      <a href="#layanan">Layanan</a>
-      <a href="#keuntungan">Keuntungan</a>
-      <a href="#testimoni">Testimoni</a>
-      <a href="#daftar">Daftar</a>
-      <a href="#artikel">Artikel</a>
-      <a href="#faq">FAQ</a>
-      <a href="#kontak">Kontak</a>
-    </nav>
-  </header>
-
-  <!-- Hero -->
-  <section class="hero">
-    <h1>SobatNoka</h1>
-    <h2 class="typing">Bersama Tumbuh Lebih Pintar...</h2>
-  </section>
-
-  <!-- Layanan -->
-  <section id="layanan">
-    <h2>Layanan SobatNoka</h2>
-    <div class="services">
-      <div class="card">🌾 <h3>TaniPintar</h3><p>Solusi digital untuk petani agar lebih produktif dan efisien.</p></div>
-      <div class="card">🔗 <h3>TaniLink</h3><p>Menghubungkan petani dengan pasar dan pembeli langsung.</p></div>
-      <div class="card">🌱 <h3>BioGrow</h3><p>Pupuk organik dan bioteknologi ramah lingkungan.</p></div>
-      <div class="card">🌿 <h3>BibitKu</h3><p>Penyediaan bibit unggul dan berkualitas.</p></div>
-    </div>
-  </section>
-
-  <!-- Keuntungan -->
-  <section id="keuntungan">
-    <h2>Keuntungan Bergabung SobatNoka</h2>
-    <ul>
-      <li>Akses teknologi pertanian modern</li>
-      <li>Jaringan pasar yang luas</li>
-      <li>Bimbingan dan komunitas petani</li>
-      <li>Dukungan finansial dan bibit unggul</li>
-    </ul>
-  </section>
-
-  <!-- Testimoni -->
-  <section id="testimoni">
-    <h2>Testimoni Petani</h2>
-    <blockquote>“Sejak gabung SobatNoka, hasil panen saya meningkat 2x lipat!”</blockquote>
-    <cite>- Budi, Petani Cabai</cite>
-  </section>
-
-  <!-- Form Daftar -->
-  <section id="daftar">
-    <h2>Daftar SobatNoka Sekarang</h2>
-    <form id="sobatNokaForm">
-      <input type="text" name="nama" placeholder="Nama Lengkap" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <input type="tel" name="telepon" placeholder="No. Telepon" required>
-      <button type="submit">Daftar Sekarang</button>
-    </form>
-  </section>
-
-  <!-- Artikel -->
-  <section id="artikel">
-    <h2>Artikel Terbaru</h2>
-    <p>Tips pertanian, inovasi teknologi, dan cerita sukses petani bersama SobatNoka.</p>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq">
-    <h2>FAQ</h2>
-    <p><strong>Tanya:</strong> Apakah SobatNoka berbayar?<br><strong>Jawab:</strong> Tidak, gratis untuk semua petani.</p>
-  </section>
-
-  <!-- Footer -->
-  <footer id="kontak">
-    <p>🌱 SobatNoka © 2025 | Bersama Tumbuh Lebih Pintar</p>
-    <p>
-      <a href="#">Facebook</a> | 
-      <a href="#">Instagram</a> | 
-      <a href="#">YouTube</a>
-    </p>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!..." width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-  </footer>
-
-  <button id="backToTop">⬆️</button>
-
-  <script>
-    // Loader
-    window.onload=function(){document.getElementById("loader").style.display="none";};
-    // Dark mode
-    const toggle=document.getElementById("darkToggle");
-    toggle.addEventListener("click",()=>{document.body.classList.toggle("dark");document.getElementById("navbar").classList.toggle("dark");});
-    // Scroll progress
-    window.onscroll=function(){
-      let winScroll=document.body.scrollTop||document.documentElement.scrollTop;
-      let height=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-      let scrolled=(winScroll/height)*100;
-      document.getElementById("scrollBar").style.width=scrolled+"%";
-      document.getElementById("backToTop").style.display=winScroll>200?"block":"none";
-      document.querySelectorAll(".card").forEach(c=>{
-        let pos=c.getBoundingClientRect().top;
-        let winH=window.innerHeight;
-        if(pos<winH-50){c.classList.add("visible");}
+    <div class="mt-6 text-center text-xs text-gray-500">© 2025 TaniPintar. Semua hak dilindungi.</div>
+  </footer>  <script>
+    // Simple form handler (local demo)
+    document.querySelectorAll('form[action="#"]').forEach(f => {
+      f.addEventListener('submit', e => {
+        e.preventDefault();
+        alert('Terima kasih! Pendaftaran Anda telah dikirim. Tim TaniPintar akan menghubungi Anda.');
+        f.reset();
+        window.location.hash = '#';
       });
-    };
-    // Back to top
-    document.getElementById("backToTop").onclick=()=>{window.scrollTo({top:0,behavior:'smooth'});};
-
-    // Form Google Sheets Integration
-    document.getElementById("sobatNokaForm").addEventListener("submit", function(e){
-      e.preventDefault();
-      let data={nama:this.nama.value,email:this.email.value,telepon:this.telepon.value};
-      fetch("https://script.google.com/macros/s/AKfycbyMbVgcE2OwAd-INaIIDhLHfXHqTQgwL-8jTCGUQF8kGCMxBjMUz9rVgYXR0zzxWGO6/exec",{
-        method:"POST",
-        body:JSON.stringify(data)
-      })
-      .then(res=>res.text())
-      .then(res=>{
-        alert("✅ Pendaftaran berhasil! Data tersimpan di Google Sheets.");
-        this.reset();
-      })
-      .catch(err=>alert("❌ Terjadi kesalahan, coba lagi."));
     });
-  </script>
-  <!-- Form Daftar -->
-<section id="daftar">
-  <h2>Daftar SobatNoka Sekarang</h2>
-  <form id="sobatNokaForm">
-    <input type="text" name="nama" placeholder="Nama Lengkap" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="tel" name="telepon" placeholder="No. Telepon" required>
-    <button type="submit">Daftar Sekarang</button>
-  </form>
-</section>
-
-<!-- Popup Modal Sukses -->
-<div id="successModal" class="popup-overlay">
-  <div class="popup-box popup-success">
-    <h3>✅ Pendaftaran Berhasil</h3>
-    <p>Selamat bergabung bersama <b>SobatNoka</b> 🌱</p>
-    <button onclick="closeModal('successModal')" class="close-btn">Tutup</button>
-  </div>
-</div>
-
-<!-- Popup Modal Error -->
-<div id="errorModal" class="popup-overlay">
-  <div class="popup-box popup-error">
-    <h3>❌ Gagal Mengirim</h3>
-    <p>Terjadi kesalahan. Mohon coba lagi nanti.</p>
-    <button onclick="closeModal('errorModal')" class="close-btn error-btn">Tutup</button>
-  </div>
-</div>
-
-<style>
-  /* Popup Overlay */
-  .popup-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 5000;
-  }
-
-  /* Popup Box */
-  .popup-box {
-    background: #28a745;
-    color: #fff;
-    padding: 30px;
-    border-radius: 16px;
-    text-align: center;
-    max-width: 320px;
-    transform: scale(0.8);
-    opacity: 0;
-    animation: fadeInScale 0.4s ease forwards;
-  }
-
-  .popup-error {
-    background: #dc3545;
-  }
-
-  @keyframes fadeInScale {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-  }
-
-  .close-btn {
-    margin-top: 15px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background: #fff;
-    color: #28a745;
-    font-weight: 600;
-  }
-
-  .error-btn {
-    color: #dc3545;
-  }
-
-  .close-btn:hover {
-    opacity: 0.8;
-  }
-</style>
-
-<script>
-  // Form Google Sheets Integration + Popup Modal Animasi
-  document.getElementById("sobatNokaForm").addEventListener("submit", function(e){
-    e.preventDefault();
-    let data={nama:this.nama.value,email:this.email.value,telepon:this.telepon.value};
-
-    fetch("https://script.google.com/macros/s/AKfycbyMbVgcE2OwAd-INaIIDhLHfXHqTQgwL-8jTCGUQF8kGCMxBjMUz9rVgYXR0zzxWGO6/exec",{
-      method:"POST",
-      body:JSON.stringify(data)
-    })
-    .then(res=>res.text())
-    .then(res=>{
-      document.getElementById("successModal").style.display="flex"; // tampilkan popup sukses
-      this.reset();
-    })
-    .catch(err=>{
-      document.getElementById("errorModal").style.display="flex"; // tampilkan popup error
-    });
-  });
-
-  function closeModal(id){
-    document.getElementById(id).style.display="none";
-  }
-</script>
-</body>
+  </script></body>
 </html>
