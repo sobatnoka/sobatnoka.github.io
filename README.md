@@ -1,3 +1,148 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgriEdu - Belajar Pertanian, Peternakan, Perikanan</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.9.2/dist/html2pdf.bundle.min.js"></script>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <div id="root"></div>  <script type="text/babel">
+    const App = () => {
+      const [page, setPage] = React.useState('home');
+      const [score, setScore] = React.useState(null);
+
+      const generateCertificate = () => {
+        const element = document.getElementById('certificate');
+        html2pdf().from(element).save('sertifikat-agriedu.pdf');
+      };
+
+      const Home = () => (
+        <section className="text-center p-8">
+          <h1 className="text-4xl font-bold text-green-700 mb-4">🌱 AgriEdu</h1>
+          <p className="text-lg mb-6">Belajar Pertanian, Peternakan, dan Perikanan Modern</p>
+          <button onClick={() => setPage('kelas')} className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-xl shadow">Mulai Belajar</button>
+        </section>
+      );
+
+      const Kelas = () => (
+        <section className="p-8">
+          <h2 className="text-2xl font-semibold mb-4">Kelas Pembelajaran</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[{cat:'Pertanian', page:'ebook'}, {cat:'Peternakan', page:'video'}, {cat:'Perikanan', page:'kuis'}].map((item,i)=>(
+              <div key={i} className="bg-white rounded-2xl shadow p-4 hover:shadow-lg transition">
+                <img src={`https://source.unsplash.com/400x200/?${item.cat}`} alt={item.cat} className="rounded-xl mb-3" />
+                <h3 className="font-bold text-lg mb-2">Dasar {item.cat}</h3>
+                <p className="text-sm mb-4">Pelajari dasar dan praktik terbaik dalam bidang {item.cat.toLowerCase()} modern.</p>
+                <button onClick={()=>setPage(item.page)} className="bg-green-600 text-white px-4 py-1 rounded-lg">Masuk</button>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+
+      const Kuis = () => {
+        const [qIndex, setQIndex] = React.useState(0);
+        const [answers, setAnswers] = React.useState([]);
+        const questions = [
+          {q:'Tanaman padi termasuk monokotil?', a:true},
+          {q:'Lele hidup di air laut?', a:false},
+          {q:'Sapi termasuk hewan ruminansia?', a:true}
+        ];
+
+        const answer = (val) => {
+          const newAnswers = [...answers, val === questions[qIndex].a];
+          if(qIndex < questions.length-1) setQIndex(qIndex+1);
+          else {
+            const result = newAnswers.filter(x=>x).length;
+            setScore(result);
+            setAnswers([]);
+            setPage('hasil');
+          }
+        };
+
+        return (
+          <section className="text-center p-8">
+            <h2 className="text-xl font-semibold mb-4">Kuis Edukasi</h2>
+            <p className="text-lg mb-6">{questions[qIndex].q}</p>
+            <div className="space-x-4">
+              <button onClick={()=>answer(true)} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl">Benar</button>
+              <button onClick={()=>answer(false)} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl">Salah</button>
+            </div>
+          </section>
+        );
+      };
+
+      const Hasil = () => (
+        <section className="text-center p-8">
+          <h2 className="text-2xl font-semibold mb-4">Hasil Kuis</h2>
+          <p className="text-lg mb-4">Skor kamu: <span className="font-bold">{score}/3</span></p>
+          <div id="certificate" className="bg-white border rounded-2xl shadow p-6 inline-block text-left">
+            <h3 className="text-xl font-semibold text-green-700">Sertifikat AgriEdu</h3>
+            <p className="text-sm">Diberikan kepada peserta atas keberhasilan menyelesaikan kuis edukasi AgriEdu dengan skor {score}/3.</p>
+          </div>
+          <div className="mt-4 space-x-3">
+            <button onClick={generateCertificate} className="bg-yellow-500 text-white px-4 py-2 rounded-xl">Unduh Sertifikat</button>
+            <button onClick={()=>setPage('home')} className="bg-gray-500 text-white px-4 py-2 rounded-xl">Kembali</button>
+          </div>
+        </section>
+      );
+
+      const Ebook = () => (
+        <section className="p-8 text-center">
+          <h2 className="text-2xl font-semibold mb-4">E-Book Pertanian</h2>
+          <p className="mb-4 text-sm text-gray-600">Baca langsung dari GitHub atau unduh ke perangkatmu.</p>
+          <iframe src="https://sobatnoka.github.io/ebook-pertanian.pdf" className="w-full h-96 border rounded-xl shadow mb-4"></iframe>
+          <div>
+            <button onClick={()=>setPage('home')} className="bg-gray-600 text-white px-4 py-2 rounded-xl">Kembali</button>
+          </div>
+        </section>
+      );
+
+      const Video = () => (
+        <section className="p-8 text-center">
+          <h2 className="text-2xl font-semibold mb-4">Video Pembelajaran Peternakan</h2>
+          <div className="flex justify-center mb-4">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video Edukasi" className="rounded-xl shadow"></iframe>
+          </div>
+          <button onClick={()=>setPage('home')} className="bg-gray-600 text-white px-4 py-2 rounded-xl">Kembali</button>
+        </section>
+      );
+
+      return (
+        <div>
+          <nav className="flex justify-between items-center px-6 py-3 bg-white shadow sticky top-0 z-10">
+            <h1 className="text-2xl font-bold text-green-700">AgriEdu</h1>
+            <div className="space-x-4 text-sm md:text-base">
+              <button onClick={()=>setPage('home')} className="hover:text-green-600">Home</button>
+              <button onClick={()=>setPage('kelas')} className="hover:text-green-600">Kelas</button>
+              <button onClick={()=>setPage('ebook')} className="hover:text-green-600">E-Book</button>
+              <button onClick={()=>setPage('video')} className="hover:text-green-600">Video</button>
+              <button onClick={()=>setPage('kuis')} className="hover:text-green-600">Kuis</button>
+            </div>
+          </nav>
+
+          {page==='home' && <Home />}
+          {page==='kelas' && <Kelas />}
+          {page==='kuis' && <Kuis />}
+          {page==='hasil' && <Hasil />}
+          {page==='ebook' && <Ebook />}
+          {page==='video' && <Video />}
+
+          <footer className="text-center py-6 mt-10 bg-green-700 text-white">
+            <p>© 2025 AgriEdu - Edukasi Pertanian, Peternakan, Perikanan</p>
+          </footer>
+        </div>
+      );
+    };
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script></body>
+</html>
+
 <html lang="id">
 <head>
   <meta charset="UTF-8">
