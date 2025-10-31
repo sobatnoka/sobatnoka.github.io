@@ -1,4 +1,3 @@
-<!doctype html>
 
 <html lang="id">
 <head>
@@ -16,19 +15,19 @@
     .glass{backdrop-filter: blur(6px); background: rgba(255,255,255,0.6);}    
     @media (prefers-reduced-motion: no-preference){
       .float-up{transform: translateY(12px); animation: floatUp 1.2s ease-out forwards;}
-      @keyframes floatUp{to{transform: translateY(0); opacity:1}}
+      @keyframes floatUp{to{transform: translateY(0); opacity:1}}fade-in fade-in-delay-3"
     }
   </style>
 </head>
 <body class="antialiased text-gray-800 bg-gray-50">
   <!-- NAV -->
   <header class="w-full bg-white shadow">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-betweenfade-in fade-in-delay-3">
       <a href="#" class="flex items-center gap-3">
         <img src="https://via.placeholder.com/48x48.png?text=TP" alt="TaniPintar" class="w-10 h-10 rounded-md" />
         <div>
           <h1 class="font-bold text-lg">TaniPintar</h1>
-          <p class="text-xs text-green-600">Belajar Bertani Cerdas</p>
+          <p class="text-xs text-green-600fade-in fade-in-delay-3">Belajar Bertani Cerdas</p>
         </div>
       </a>
       <nav class="hidden md:flex items-center gap-6 text-sm">
@@ -49,12 +48,12 @@
       <a href="#faq" class="block py-2">FAQ</a>
     </div>
   </header>  <!-- HERO -->  <section class="hero-bg text-white">
-    <div class="max-w-6xl mx-auto px-6 py-20 flex flex-col lg:flex-row items-center gap-12">
+    <div class="max-w-6xl mx-auto px-6 py-20 flex flex-col lg:flex-row items-center gap-12 fade-in fade-in-delay-3">
       <div class="lg:w-1/2">
         <span class="inline-block bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">Kelas Online • Interaktif • Sertifikat</span>
         <h2 class="mt-6 text-4xl lg:text-5xl font-extrabold leading-tight">Pengen bisa bertani?<br class="hidden md:block"> Yuk belajar bersama <span class="text-green-200">TaniPintar</span></h2>
         <p class="mt-4 text-lg text-green-50/90">Dari lahan kosong jadi ladang emas — pelajari teknik pertanian, peternakan & perikanan budidaya dengan praktisi. Modul video, e-book, diskusi, dan praktik nyata.</p>
-        <div class="mt-6 flex items-center gap-4">
+        <div class="mt-6 flex items-center gap-4 fade-in fade-in-delay-3">
           <a href="#daftar" class="inline-block bg-white text-green-700 font-semibold px-6 py-3 rounded-lg shadow-lg">Daftar Sekarang</a>
           <a href="#program" class="inline-block border border-white px-5 py-3 rounded-lg">Lihat Program</a>
         </div>
