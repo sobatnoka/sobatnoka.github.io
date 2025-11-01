@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="id">
+
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,7 +35,7 @@ footer a {color: #95d5b2; text-decoration: none;}
 </head>
 <body>
   <header>
-    <img src="logo-noka.png" alt="Logo NOKA" style="width:80px; margin-bottom:10px;" />
+  //  <img src="logo-noka.png" alt="Logo NOKA" style="width:80px; margin-bottom:10px;" />
     <h1>TaniPeduli</h1>
     <p>Platform kepedulian sosial untuk petani Indonesia. Karena petani juga pahlawan negeri ini.</p>
     <button class="cta-btn">Donasi Sekarang</button>
