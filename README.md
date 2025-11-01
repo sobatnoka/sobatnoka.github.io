@@ -35,7 +35,7 @@ footer a {color: #95d5b2; text-decoration: none;}
 </head>
 <body>
   <header>
-    <img src="https://github.com/sobatnoka/sobatnoka.github.io/blob/207af06a0c5ce148acac300980f32a1a17dc439d/1760247049579.png" alt="Logo NOKA" style="width:80px; margin-bottom:10px;" />
+  <img src = "https://github.com/sobatnoka/sobatnoka.github.io/blob/207af06a0c5ce148acac300980f32a1a17dc439d/1760247049579.png" alt="Logo NOKA" style="width:80px; margin-bottom:10px;" />
     <h1>TaniPeduli</h1>
     <p>Platform kepedulian sosial untuk petani Indonesia. Karena petani juga pahlawan negeri ini.</p>
     <button class="cta-btn">Donasi Sekarang</button>
