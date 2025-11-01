@@ -1,5 +1,4 @@
-
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,14 +27,15 @@ h2 {text-align: center; color: #2b9348; margin-bottom: 20px;}
 .cta-section h2 {color: #fff;}
 .cta-section button {background: #fff; color: #7b2cbf; margin-top: 20px;}
 
-footer {background: #1b4332; color: white; text-align: center; padding: 30px 20px; margin-top: 60px;}
+footer {background: #1b4332; color: white; text-align: center; padding: 30px 20px; margin-top: 60px; position: relative;}
 footer a {color: #95d5b2; text-decoration: none;}
+footer img {width: 60px; position: absolute; top: 20px; right: 20px; opacity: 0.8;}
 
   </style>
 </head>
 <body>
   <header>
-  <img src = "https://github.com/sobatnoka/sobatnoka.github.io/blob/207af06a0c5ce148acac300980f32a1a17dc439d/1760247049579.png alt="Logo NOKA" style="width:80px; margin-bottom:10px;" />
+    <img src="https://github.com/sobatnoka/sobatnoka.github.io/blob/fbf1b6db1f524d74caafe7a10fcdda251949889d/1760247049579.png?raw=true" alt="Logo NOKA" style="width:100px; margin-bottom:20px; border-radius:12px;" />
     <h1>TaniPeduli</h1>
     <p>Platform kepedulian sosial untuk petani Indonesia. Karena petani juga pahlawan negeri ini.</p>
     <button class="cta-btn">Donasi Sekarang</button>
@@ -65,6 +65,7 @@ footer a {color: #95d5b2; text-decoration: none;}
     <p>Mulai dari satu klik kecil, kamu bisa bantu kehidupan petani di seluruh Indonesia.</p>
     <button class="cta-btn">Mulai Peduli Sekarang</button>
   </section>  <footer>
+    <img src="https://github.com/sobatnoka/sobatnoka.github.io/blob/fbf1b6db1f524d74caafe7a10fcdda251949889d/1760247049579.png?raw=true" alt="Logo NOKA" />
     <p>&copy; 2025 TaniPeduli by NOKA Group | <a href="#">Kebijakan Privasi</a> | <a href="#">Hubungi Kami</a></p>
   </footer>
 </body>
