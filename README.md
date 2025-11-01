@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="id">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -64,8 +64,8 @@ footer img {width: 60px; position: absolute; top: 20px; right: 20px; opacity: 0.
     <h2>Bersama Kita Bisa Membantu Petani</h2>
     <p>Mulai dari satu klik kecil, kamu bisa bantu kehidupan petani di seluruh Indonesia.</p>
     <button class="cta-btn">Mulai Peduli Sekarang</button>
-  </section>  <footer>
-    <img src="https://github.com/sobatnoka/sobatnoka.github.io/blob/fbf1b6db1f524d74caafe7a10fcdda251949889d/1760247049579.png?raw=true" alt="Logo NOKA" />
+  </section>  
+  <footer>   
     <p>&copy; 2025 TaniPeduli by NOKA Group | <a href="#">Kebijakan Privasi</a> | <a href="#">Hubungi Kami</a></p>
   </footer>
 </body>
