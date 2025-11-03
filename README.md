@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -7,37 +6,28 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-  /* Simple fade-up animation */
+  /* Fade-up animation */
   .fade-up { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
 
   /* Smooth scroll */
   html { scroll-behavior: smooth; }
 
-  /* Parallax for hero */
+  /* Parallax hero */
   .parallax { background-attachment: fixed; background-size: cover; background-position: center; }
 
-  /* Modal styles */
+  /* Modal */
   .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow:auto; background-color: rgba(0,0,0,0.7); }
   .modal-content { background-color: #fff; margin: 10% auto; padding: 1rem; border-radius: 0.5rem; max-width: 800px; position: relative; }
   .close { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; cursor: pointer; }
+
+  /* Horizontal roadmap scroll */
+  .roadmap-container { display: flex; overflow-x:auto; gap:2rem; padding-bottom:1rem; }
+  .roadmap-container::-webkit-scrollbar { height:8px; }
+  .roadmap-container::-webkit-scrollbar-thumb { background:#16A34A; border-radius:4px; }
 </style>
 </head>
 <body class="bg-gray-50 font-sans">
-
-<!-- Header -->
-<header class="bg-white shadow fixed w-full z-50">
-  <div class="container mx-auto flex justify-between items-center py-4 px-6">
-    <div class="text-2xl font-bold text-green-700">NOKA Group</div>
-    <nav class="space-x-6">
-      <a href="#about" class="text-gray-700 hover:text-green-700">About</a>
-      <a href="#ecosystem" class="text-gray-700 hover:text-green-700">Ecosystem</a>
-      <a href="#roadmap" class="text-gray-700 hover:text-green-700">Roadmap</a>
-      <a href="#financials" class="text-gray-700 hover:text-green-700">Financials</a>
-      <a href="#contact" class="text-gray-700 hover:text-green-700">Contact</a>
-    </nav>
-  </div>
-</header>
 
 <!-- Hero Section -->
 <section class="relative h-screen parallax">
@@ -106,34 +96,32 @@
 <section id="roadmap" class="py-20">
   <div class="container mx-auto px-6 text-center">
     <h2 class="text-3xl font-bold mb-12 text-green-700 fade-up">Roadmap 2025-2035</h2>
-    <div class="overflow-x-auto max-w-6xl mx-auto">
-      <div class="flex space-x-12">
-        <div class="bg-white p-6 rounded shadow min-w-[250px] fade-up">
-          <h3 class="font-semibold text-green-700 mb-2">2025-2026</h3>
-          <p>MVP, community validation & platform launch</p>
-        </div>
-        <div class="bg-white p-6 rounded shadow min-w-[250px] fade-up">
-          <h3 class="font-semibold text-green-700 mb-2">2027-2028</h3>
-          <p>National scalability, mobile apps, Marketplace 2.0</p>
-        </div>
-        <div class="bg-white p-6 rounded shadow min-w-[250px] fade-up">
-          <h3 class="font-semibold text-green-700 mb-2">2029-2030</h3>
-          <p>Blockchain, smart supply chain, fintech integration</p>
-        </div>
-        <div class="bg-white p-6 rounded shadow min-w-[250px] fade-up">
-          <h3 class="font-semibold text-green-700 mb-2">2031-2032</h3>
-          <p>ASEAN expansion, global partnerships, AI & IoT</p>
-        </div>
-        <div class="bg-white p-6 rounded shadow min-w-[250px] fade-up">
-          <h3 class="font-semibold text-green-700 mb-2">2033-2035</h3>
-          <p>Global platform, DAO, AgriNFT, IPO</p>
-        </div>
+    <div class="roadmap-container fade-up">
+      <div class="bg-white p-6 rounded shadow min-w-[250px]">
+        <h3 class="font-semibold text-green-700 mb-2">2025-2026</h3>
+        <p>MVP, community validation & platform launch</p>
+      </div>
+      <div class="bg-white p-6 rounded shadow min-w-[250px]">
+        <h3 class="font-semibold text-green-700 mb-2">2027-2028</h3>
+        <p>National scalability, mobile apps, Marketplace 2.0</p>
+      </div>
+      <div class="bg-white p-6 rounded shadow min-w-[250px]">
+        <h3 class="font-semibold text-green-700 mb-2">2029-2030</h3>
+        <p>Blockchain, smart supply chain, fintech integration</p>
+      </div>
+      <div class="bg-white p-6 rounded shadow min-w-[250px]">
+        <h3 class="font-semibold text-green-700 mb-2">2031-2032</h3>
+        <p>ASEAN expansion, global partnerships, AI & IoT</p>
+      </div>
+      <div class="bg-white p-6 rounded shadow min-w-[250px]">
+        <h3 class="font-semibold text-green-700 mb-2">2033-2035</h3>
+        <p>Global platform, DAO, AgriNFT, IPO</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Financials Section -->
+<!-- Financial Section -->
 <section id="financials" class="bg-gray-100 py-20">
   <div class="container mx-auto px-6 text-center">
     <h2 class="text-3xl font-bold mb-12 text-green-700 fade-up">Financial Projections</h2>
@@ -144,13 +132,13 @@
   </div>
 </section>
 
-<!-- Investor Contact / Download Section -->
+<!-- Investor Section -->
 <section id="contact" class="bg-green-700 text-white py-20">
   <div class="container mx-auto px-6 text-center">
-    <h2 class="text-3xl font-bold mb-6 fade-up">Investor Relations</h2>
+    <h2 class="text-3xl font-bold mb-6 fade-up">InvestorRelations</h2>
     <p class="mb-6 fade-up">For partnership, investment, or inquiries, contact us or download the pitch deck:</p>
     <button id="openModal" class="bg-white text-green-700 font-semibold py-3 px-6 rounded shadow hover:bg-gray-100 transition mb-6 inline-block fade-up">Download / Preview Pitch Deck</button>
-    
+
     <!-- Investor Form -->
     <form class="max-w-xl mx-auto mt-6 space-y-4 bg-white p-6 rounded shadow text-gray-700 fade-up">
       <input type="text" placeholder="Full Name" class="w-full border border-gray-300 p-3 rounded" required>
@@ -220,6 +208,3 @@
 </script>
 </body>
 </html>
-
-
-    
